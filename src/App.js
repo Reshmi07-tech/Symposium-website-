@@ -1,3 +1,4 @@
+import Admin from "./Admin";
 import Register from "./Register";
 import Payment from "./Payment";
 import EventPass from "./EventPass";
@@ -141,6 +142,7 @@ function App() {
   if (path === "/payment") return <Payment />;
   if (path === "/event-pass") return <EventPass />;
   if (path === "/qr-pass") return <QRPass />;
+  if (path === "/admin") return <Admin />;
 
   return <Home />;
 }
