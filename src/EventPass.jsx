@@ -20,7 +20,7 @@ function EventPass() {
 
 
   const qrData =
-  "http://10.185.97.175:3000/qr-pass?registrationId=" +
+ "https://eclectic26.vercel.app/qr-pass?registrationId=" +
   encodeURIComponent(registrationId);
   return (
     <div className="event-pass-page">

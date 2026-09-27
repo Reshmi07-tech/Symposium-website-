@@ -2149,59 +2149,161 @@ body {
   font-weight: 800;
   letter-spacing: 1px;
 }
-
-/* =========================================
-   MOBILE
-   ========================================= */
+/* ==========================================
+   EVENT PASS - MOBILE SCREENSHOT MODE
+   ========================================== */
 
 @media (max-width: 700px) {
 
-  .event-pass {
-    grid-template-columns: 1fr;
-    width: 95%;
+  .event-pass-page {
+    min-height: 100vh;
+    width: 100%;
+    padding: 12px 8px;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    overflow: hidden;
   }
+
+  .event-pass {
+    width: 100%;
+    max-width: 390px;
+    min-height: 0;
+    height: auto;
+
+    grid-template-columns: minmax(0, 1fr) 92px;
+
+    border-radius: 14px;
+    box-sizing: border-box;
+  }
+
+  /* MAIN PASS */
 
   .pass-main {
-    padding: 30px 25px;
+    padding: 18px 15px;
+    min-width: 0;
   }
 
-  .pass-event-title h1 {
-    font-size: 34px;
+  .pass-label {
+    font-size: 8px;
+    letter-spacing: 1.5px;
+  }
+
+  .pass-department {
+    margin: 4px 0 8px;
+    font-size: 7px;
+    letter-spacing: 1px;
+  }
+
+  /* ECLECTIC TITLE */
+
+  .pass-event-title {
+    gap: 6px;
+    margin-bottom: 2px;
   }
 
   .pass-title-logo {
-    width: 50px;
-    height: 50px;
+    width: 48px;
+    height: 48px;
   }
+
+  .pass-event-title h1 {
+    font-size: 27px;
+    letter-spacing: 1px;
+  }
+
+  .pass-title {
+    margin: 6px 0 9px;
+    font-size: 8px;
+    letter-spacing: 3px;
+  }
+
+  .pass-line {
+    margin-bottom: 12px;
+  }
+
+  /* DETAILS */
 
   .pass-details {
-    grid-template-columns: 1fr;
-    gap: 17px;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px 12px;
   }
+
+  .pass-details small,
+  .pass-bottom small {
+    margin-bottom: 3px;
+    font-size: 6px;
+    letter-spacing: 1px;
+  }
+
+  .pass-details p,
+  .pass-bottom p {
+    font-size: 9px;
+    line-height: 1.2;
+    word-break: break-word;
+  }
+
+  /* BOTTOM */
 
   .pass-bottom {
-    gap: 35px;
-    flex-wrap: wrap;
+    gap: 18px;
+    margin-top: 13px;
+    padding-top: 10px;
   }
+
+  /* QR SIDE */
 
   .pass-side {
-    border-left: none;
-    border-top: 1px dashed rgba(139, 92, 246, 0.45);
-    padding: 25px;
-  }
+    min-width: 0;
+    padding: 12px 6px;
 
-  .side-text {
-    writing-mode: horizontal-tb;
-    transform: none;
-    margin-bottom: 15px;
+    border-left: 1px dashed rgba(139, 92, 246, 0.45);
+    border-top: none;
+
+    justify-content: center;
   }
 
   .side-line {
-    width: 45px;
-    height: 2px;
-    margin-bottom: 15px;
+    width: 2px;
+    height: 25px;
+    margin-bottom: 8px;
+  }
+
+  .side-text {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    margin: 0 0 10px;
+    font-size: 7px;
+    letter-spacing: 2px;
+  }
+
+  .pass-qr {
+    padding: 5px;
+    border-radius: 6px;
+  }
+
+  .pass-qr canvas {
+    width: 68px !important;
+    height: 68px !important;
+  }
+
+  .pass-side > small {
+    margin-top: 8px;
+    font-size: 6px;
+    letter-spacing: 1px;
+  }
+
+  .reg-id {
+    margin: 3px 0 0;
+    font-size: 7px;
+    letter-spacing: 0.5px;
+    text-align: center;
   }
 }
+
+
+  
+   
 /* ==========================================
    ECLECTIC'26 PREMIUM HOME
    ========================================== */
