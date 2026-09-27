@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { collection, getDocs, doc, updateDoc } from "firebase/firestore";
+import { collection, getDocs, doc, updateDoc, deleteDoc } from "firebase/firestore";
 import { db } from "./firebase";
 import "./Admin.css";
 
@@ -24,6 +24,23 @@ function Admin() {
       console.error("Approval failed:", error);
     }
   };
+  const handleDelete = async (registrationId) => {
+  const confirmDelete = window.confirm(
+    "Are you sure you want to delete this registration?"
+  );
+
+  if (!confirmDelete) return;
+
+  try {
+    await deleteDoc(doc(db, "registrations", registrationId));
+
+    setRegistrations((prev) =>
+      prev.filter((registration) => registration.id !== registrationId)
+    );
+  } catch (error) {
+    console.error("Delete failed:", error);
+  }
+};
 
   useEffect(() => {
     const fetchRegistrations = async () => {
@@ -135,6 +152,12 @@ function Admin() {
               ? "✓ Approved"
               : "Approve Registration"}
           </button>
+          <button
+  className="delete-btn"
+  onClick={() => handleDelete(registration.id)}
+>
+  Delete Registration
+</button>
         </div>
       ))}
     </div>
