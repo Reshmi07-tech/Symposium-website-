@@ -10,7 +10,7 @@ function Payment() {
   const [paymentProof, setPaymentProof] = useState(null);
   const [error, setError] = useState("");
 
-  const registrationFee = 50;
+  const registrationFee = 99;
 
   const handleProceed = async (e) => {
     e.preventDefault();

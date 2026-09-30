@@ -333,8 +333,8 @@ body {
 .logo-stage {
   position: relative;
 
-  width: 180px;
-  height: 180px;
+  width: 500px;
+  height: 500px;
 
   display: flex;
   align-items: center;
@@ -347,8 +347,8 @@ body {
   position: relative;
   z-index: 5;
 
-  width: 150px;
-  height: 150px;
+  width: 250px;
+  height: 250px;
 
   object-fit: contain;
 
@@ -4380,3 +4380,2384 @@ body {
   }
 }
 
+/* =========================================
+   ECLECTIC'26 - EVENT DETAILS
+========================================= */
+
+.home-event-details {
+  position: relative;
+  width: 100%;
+  padding: 120px 7% 80px;
+  box-sizing: border-box;
+  z-index: 5;
+}
+
+.section-heading {
+  text-align: center;
+  margin-bottom: 55px;
+  position: relative;
+}
+
+.section-heading > span {
+  display: block;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 5px;
+  color: #a855f7;
+  margin-bottom: 12px;
+}
+
+.section-heading h2 {
+  margin: 0;
+  font-size: clamp(32px, 5vw, 60px);
+  font-weight: 900;
+  letter-spacing: 3px;
+  color: #ffffff;
+  text-shadow:
+    0 0 10px rgba(168, 85, 247, 0.7),
+    0 0 30px rgba(168, 85, 247, 0.35);
+}
+
+.section-heading p {
+  margin-top: 12px;
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 12px;
+  letter-spacing: 4px;
+}
+
+
+/* Event cards */
+
+.event-detail-grid {
+  width: 100%;
+  max-width: 1250px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 30px;
+}
+
+.event-detail-card {
+  position: relative;
+  padding: 35px;
+  min-height: 550px;
+  border: 1px solid rgba(168, 85, 247, 0.3);
+  border-radius: 24px;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(25, 10, 45, 0.92),
+      rgba(8, 5, 18, 0.96)
+    );
+  box-shadow:
+    0 0 30px rgba(168, 85, 247, 0.08),
+    inset 0 0 30px rgba(168, 85, 247, 0.03);
+  overflow: hidden;
+  transition: 0.4s ease;
+}
+
+.event-detail-card::before {
+  content: "";
+  position: absolute;
+  width: 180px;
+  height: 180px;
+  top: -90px;
+  right: -90px;
+  border-radius: 50%;
+  background: rgba(168, 85, 247, 0.15);
+  filter: blur(30px);
+}
+
+.event-detail-card:hover {
+  transform: translateY(-8px);
+  border-color: rgba(192, 132, 252, 0.7);
+  box-shadow:
+    0 0 40px rgba(168, 85, 247, 0.18),
+    0 0 80px rgba(168, 85, 247, 0.08),
+    inset 0 0 35px rgba(168, 85, 247, 0.04);
+}
+
+.event-card-number {
+  display: inline-block;
+  padding: 8px 13px;
+  border: 1px solid rgba(168, 85, 247, 0.35);
+  border-radius: 8px;
+  color: #c084fc;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 3px;
+  margin-bottom: 25px;
+  background: rgba(168, 85, 247, 0.06);
+}
+
+.event-detail-card h3 {
+  margin: 0;
+  color: #ffffff;
+  font-size: 25px;
+  letter-spacing: 2px;
+}
+
+.event-detail-card > p {
+  margin: 15px 0 30px;
+  max-width: 520px;
+  color: rgba(255, 255, 255, 0.58);
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+
+/* Event list */
+
+.home-event-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.home-event-item {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 14px 16px;
+  border-radius: 10px;
+  border: 1px solid rgba(168, 85, 247, 0.12);
+  background: rgba(255, 255, 255, 0.025);
+  transition: 0.3s ease;
+}
+
+.home-event-item:hover {
+  transform: translateX(6px);
+  border-color: rgba(168, 85, 247, 0.45);
+  background: rgba(168, 85, 247, 0.08);
+}
+
+.home-event-item span {
+  min-width: 24px;
+  color: #a855f7;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.home-event-item strong {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 13px;
+  letter-spacing: 1px;
+}
+
+
+/* Bottom rule */
+
+.event-rule {
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(168, 85, 247, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.event-rule span {
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 10px;
+  letter-spacing: 3px;
+}
+
+.event-rule strong {
+  color: #c084fc;
+  font-size: 11px;
+  letter-spacing: 1px;
+}
+
+
+/* =========================================
+   ASSOCIATION MEMBERS
+========================================= */
+
+.association-section {
+  position: relative;
+  width: 100%;
+  padding: 100px 7% 120px;
+  box-sizing: border-box;
+  z-index: 5;
+}
+
+.association-grid {
+  width: 100%;
+  max-width: 1250px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 18px;
+}
+
+
+/* Member card */
+
+.member-card {
+  position: relative;
+  padding: 20px;
+  min-height: 330px;
+  border-radius: 20px;
+  border: 1px solid rgba(168, 85, 247, 0.25);
+  background:
+    linear-gradient(
+      150deg,
+      rgba(27, 10, 48, 0.95),
+      rgba(8, 5, 18, 0.98)
+    );
+  overflow: hidden;
+  transition: 0.4s ease;
+}
+
+.member-card::after {
+  content: "";
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  right: -60px;
+  bottom: -60px;
+  border-radius: 50%;
+  background: rgba(168, 85, 247, 0.16);
+  filter: blur(25px);
+}
+
+.member-card:hover {
+  transform: translateY(-10px);
+  border-color: rgba(192, 132, 252, 0.7);
+  box-shadow:
+    0 0 30px rgba(168, 85, 247, 0.18),
+    0 0 60px rgba(168, 85, 247, 0.06);
+}
+
+
+/* Member number */
+
+.member-number {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  color: rgba(192, 132, 252, 0.55);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+
+
+/* Member photo */
+
+.member-photo {
+  position: relative;
+  width: 100%;
+  height: 190px;
+  margin-bottom: 20px;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid rgba(168, 85, 247, 0.25);
+  background:
+    radial-gradient(
+      circle at center,
+      rgba(168, 85, 247, 0.18),
+      rgba(8, 5, 18, 0.95)
+    );
+}
+
+.member-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+
+/* Temporary photo placeholder */
+
+.member-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.member-placeholder::before {
+  content: "";
+  position: absolute;
+  width: 85px;
+  height: 85px;
+  border-radius: 50%;
+  border: 1px solid rgba(192, 132, 252, 0.45);
+  box-shadow:
+    0 0 20px rgba(168, 85, 247, 0.25),
+    inset 0 0 20px rgba(168, 85, 247, 0.08);
+}
+
+.member-placeholder span {
+  position: relative;
+  color: #c084fc;
+  font-size: 20px;
+  font-weight: 900;
+  letter-spacing: 3px;
+  text-shadow:
+    0 0 10px rgba(168, 85, 247, 0.8);
+}
+
+
+/* Member information */
+
+.member-info {
+  position: relative;
+  z-index: 2;
+}
+
+.member-info > span {
+  display: block;
+  margin-bottom: 7px;
+  color: #a855f7;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.member-info h3 {
+  margin: 0;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+
+/* =========================================
+   MOBILE RESPONSIVE
+========================================= */
+
+@media (max-width: 1100px) {
+  .association-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 800px) {
+  .event-detail-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .association-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .event-detail-card {
+    min-height: auto;
+  }
+}
+
+@media (max-width: 550px) {
+  .home-event-details,
+  .association-section {
+    padding-left: 5%;
+    padding-right: 5%;
+  }
+
+  .section-heading {
+    margin-bottom: 35px;
+  }
+
+  .section-heading h2 {
+    font-size: 30px;
+  }
+
+  .section-heading p {
+    font-size: 9px;
+    letter-spacing: 2px;
+  }
+
+  .event-detail-card {
+    padding: 24px;
+    border-radius: 18px;
+  }
+
+  .event-detail-card h3 {
+    font-size: 20px;
+  }
+
+  .home-event-item {
+    padding: 12px;
+  }
+
+  .home-event-item strong {
+    font-size: 11px;
+  }
+
+  .event-rule {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .association-grid {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+
+  .member-card {
+    min-height: auto;
+  }
+
+  .member-photo {
+    height: 230px;
+  }
+}
+/* =========================================================
+   ECLECTIC'26 — PREMIUM EVENT + ASSOCIATION SECTIONS
+   Purple / Neon Futuristic
+========================================================= */
+
+
+/* =========================
+   COMMON SECTION
+========================= */
+
+.home-event-details,
+.association-section {
+  position: relative;
+  width: 100%;
+  padding: 110px 6%;
+  box-sizing: border-box;
+  overflow: hidden;
+  z-index: 5;
+}
+
+
+/* subtle futuristic grid */
+
+.home-event-details::before,
+.association-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.18;
+
+  background-image:
+    linear-gradient(
+      rgba(168, 85, 247, 0.08) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(168, 85, 247, 0.08) 1px,
+      transparent 1px
+    );
+
+  background-size: 60px 60px;
+
+  mask-image: linear-gradient(
+    to bottom,
+    transparent,
+    black 20%,
+    black 80%,
+    transparent
+  );
+}
+
+
+/* =========================
+   SECTION HEADING
+========================= */
+
+.section-heading {
+  position: relative;
+  text-align: center;
+  margin-bottom: 70px;
+  z-index: 2;
+}
+
+.section-heading > span {
+  display: inline-block;
+
+  padding: 6px 14px;
+
+  border: 1px solid rgba(168, 85, 247, 0.5);
+  border-radius: 30px;
+
+  color: #c084fc;
+
+  font-size: 10px;
+  font-weight: 800;
+
+  letter-spacing: 4px;
+
+  background: rgba(168, 85, 247, 0.05);
+
+  box-shadow:
+    0 0 15px rgba(168, 85, 247, 0.12);
+}
+
+.section-heading h2 {
+  margin: 18px 0 8px;
+
+  font-size: clamp(34px, 5vw, 58px);
+
+  font-weight: 900;
+
+  letter-spacing: 5px;
+
+  color: #ffffff;
+
+  text-transform: uppercase;
+
+  text-shadow:
+    0 0 8px rgba(192, 132, 252, 0.7),
+    0 0 30px rgba(168, 85, 247, 0.25);
+}
+
+.section-heading p {
+  margin: 0;
+
+  color: rgba(255, 255, 255, 0.4);
+
+  font-size: 10px;
+
+  letter-spacing: 5px;
+}
+
+
+/* =========================
+   EVENT GRID
+========================= */
+
+.event-detail-grid {
+  position: relative;
+
+  width: 100%;
+  max-width: 1250px;
+
+  margin: auto;
+
+  display: grid;
+
+  grid-template-columns: repeat(2, 1fr);
+
+  gap: 28px;
+
+  z-index: 2;
+}
+
+
+/* =========================
+   EVENT CARD
+========================= */
+
+.event-detail-card {
+  position: relative;
+
+  min-height: 520px;
+
+  padding: 32px;
+
+  border-radius: 4px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(30, 10, 55, 0.9),
+      rgba(7, 4, 16, 0.97)
+    );
+
+  border: 1px solid rgba(168, 85, 247, 0.3);
+
+  clip-path: polygon(
+    0 18px,
+    18px 0,
+    calc(100% - 18px) 0,
+    100% 18px,
+    100% calc(100% - 18px),
+    calc(100% - 18px) 100%,
+    18px 100%,
+    0 calc(100% - 18px)
+  );
+
+  box-shadow:
+    0 0 30px rgba(168, 85, 247, 0.07),
+    inset 0 0 40px rgba(168, 85, 247, 0.025);
+
+  transition:
+    transform 0.35s ease,
+    border-color 0.35s ease,
+    box-shadow 0.35s ease;
+
+  overflow: hidden;
+}
+
+
+/* corner neon */
+
+.event-detail-card::before {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  left: 0;
+
+  width: 70px;
+  height: 2px;
+
+  background: #c084fc;
+
+  box-shadow:
+    0 0 12px #a855f7,
+    0 0 25px #a855f7;
+}
+
+.event-detail-card::after {
+  content: "";
+
+  position: absolute;
+
+  right: 0;
+  bottom: 0;
+
+  width: 70px;
+  height: 2px;
+
+  background: #a855f7;
+
+  box-shadow:
+    0 0 12px #a855f7,
+    0 0 25px #a855f7;
+}
+
+
+.event-detail-card:hover {
+  transform: translateY(-7px);
+
+  border-color: rgba(192, 132, 252, 0.75);
+
+  box-shadow:
+    0 0 25px rgba(168, 85, 247, 0.18),
+    0 0 70px rgba(168, 85, 247, 0.07),
+    inset 0 0 40px rgba(168, 85, 247, 0.04);
+}
+
+
+/* =========================
+   CARD NUMBER
+========================= */
+
+.event-card-number {
+  display: inline-block;
+
+  color: #a855f7;
+
+  font-size: 10px;
+
+  font-weight: 800;
+
+  letter-spacing: 4px;
+
+  padding-bottom: 10px;
+
+  border-bottom: 1px solid rgba(168, 85, 247, 0.35);
+}
+
+
+/* =========================
+   EVENT TITLE
+========================= */
+
+.event-detail-card h3 {
+  margin: 25px 0 12px;
+
+  color: #ffffff;
+
+  font-size: 24px;
+
+  font-weight: 800;
+
+  letter-spacing: 2px;
+
+  text-transform: uppercase;
+}
+
+.event-detail-card > p {
+  margin: 0 0 28px;
+
+  color: rgba(255, 255, 255, 0.5);
+
+  font-size: 13px;
+
+  line-height: 1.8;
+}
+
+
+/* =========================
+   EVENT LIST
+========================= */
+
+.home-event-list {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 8px;
+}
+
+.home-event-item {
+  position: relative;
+
+  display: flex;
+
+  align-items: center;
+
+  padding: 13px 15px;
+
+  background: rgba(168, 85, 247, 0.025);
+
+  border-left: 2px solid rgba(168, 85, 247, 0.25);
+
+  transition: 0.3s ease;
+}
+
+.home-event-item:hover {
+  padding-left: 22px;
+
+  background: rgba(168, 85, 247, 0.08);
+
+  border-left-color: #c084fc;
+
+  box-shadow:
+    inset 10px 0 25px rgba(168, 85, 247, 0.04);
+}
+
+.home-event-item span {
+  width: 30px;
+
+  color: #a855f7;
+
+  font-size: 10px;
+
+  font-weight: 800;
+
+  letter-spacing: 1px;
+}
+
+.home-event-item strong {
+  color: rgba(255, 255, 255, 0.88);
+
+  font-size: 12px;
+
+  letter-spacing: 1.5px;
+
+  font-weight: 600;
+}
+
+
+/* =========================
+   EVENT RULE
+========================= */
+
+.event-rule {
+  position: absolute;
+
+  left: 32px;
+  right: 32px;
+  bottom: 25px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  padding-top: 18px;
+
+  border-top: 1px solid rgba(168, 85, 247, 0.18);
+}
+
+.event-rule span {
+  color: rgba(255, 255, 255, 0.3);
+
+  font-size: 9px;
+
+  letter-spacing: 3px;
+}
+
+.event-rule strong {
+  color: #c084fc;
+
+  font-size: 10px;
+
+  letter-spacing: 1.5px;
+
+  text-shadow:
+    0 0 10px rgba(168, 85, 247, 0.4);
+}
+
+
+/* =========================================
+   ECLECTIC'26 — ASSOCIATION MEMBERS
+   PREMIUM PURPLE NEON ORBIT STYLE
+========================================= */
+
+.association-section {
+  position: relative;
+  width: 100%;
+  padding: 95px 6% 110px;
+  box-sizing: border-box;
+  overflow: hidden;
+  background: transparent;
+}
+
+/* =========================
+   SECTION HEADING
+========================= */
+
+.section-heading {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  margin-bottom: 75px;
+}
+
+.section-heading > span {
+  display: block;
+  margin-bottom: 12px;
+  font-family: "Rajdhani", sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 5px;
+  color: #d9a7ff;
+  text-shadow:
+    0 0 8px rgba(217, 167, 255, 0.9),
+    0 0 18px rgba(168, 85, 247, 0.5);
+}
+
+.section-heading h2 {
+  margin: 0;
+  font-family: "Orbitron", sans-serif;
+  font-size: clamp(28px, 4vw, 45px);
+  font-weight: 900;
+  letter-spacing: 4px;
+  color: #ffffff;
+  text-shadow:
+    0 0 7px rgba(218, 170, 255, 1),
+    0 0 18px rgba(168, 85, 247, 0.7),
+    0 0 35px rgba(111, 30, 220, 0.35);
+}
+
+.section-heading p {
+  margin-top: 14px;
+  font-family: "Rajdhani", sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 4px;
+  color: rgba(230, 210, 245, 0.75);
+  text-shadow:
+    0 0 8px rgba(210, 170, 255, 0.4);
+}
+
+.section-heading::after {
+  content: "";
+  display: block;
+  width: 80px;
+  height: 1px;
+  margin: 24px auto 0;
+  background: #c084fc;
+  box-shadow:
+    0 0 8px #c084fc,
+    0 0 18px rgba(192, 132, 252, 0.7);
+}
+
+/* =========================
+   MEMBERS GRID
+========================= */
+
+.association-grid {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 1250px;
+  margin: 0 auto;
+
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 65px 30px;
+}
+
+/* =========================
+   MEMBER
+========================= */
+
+.member-card {
+  position: relative;
+  min-width: 0;
+  text-align: center;
+  padding: 5px 5px 20px;
+
+  background: transparent;
+  border: none;
+  box-shadow: none;
+
+  transition: transform 0.3s ease;
+}
+
+/* Only slight movement — NO ZOOM */
+.member-card:hover {
+  transform: translateY(-5px);
+}
+
+/* =========================
+   PHOTO + RING
+========================= */
+
+.member-photo-wrapper {
+  position: relative;
+
+  width: 175px;
+  height: 175px;
+
+  /* CIRCLE KONJAM KEELA */
+  margin: 25px auto 40px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  overflow: visible;
+}
+
+/* =========================
+   ROTATING NEON RING
+========================= */
+
+.rotating-ring {
+  position: absolute;
+
+  width: 170px;
+  height: 170px;
+
+  border-radius: 50%;
+  border: 2px solid transparent;
+
+  border-top-color: rgba(190, 150, 225, 0.65);
+  border-right-color: rgba(175, 135, 215, 0.50);
+  border-bottom-color: rgba(155, 115, 200, 0.40);
+  border-left-color: rgba(180, 140, 220, 0.55);
+
+  box-shadow:
+    0 0 4px rgba(180, 140, 220, 0.35),
+    0 0 9px rgba(168, 85, 247, 0.20);
+
+  animation: rotateRing 2.5s linear infinite;
+
+  z-index: 1;
+  pointer-events: none;
+}
+/* Ring rotation */
+
+@keyframes rotateRing {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* =========================
+   MEMBER PHOTO
+========================= */
+
+.member-photo {
+  position: relative;
+
+  width: 155px;
+  height: 155px;
+
+  border-radius: 50%;
+  overflow: hidden;
+
+  background: #09050f;
+
+  border: 2px solid rgba(224, 170, 255, 0.95);
+
+  box-shadow:
+    0 0 10px rgba(224, 170, 255, 0.5),
+    0 0 22px rgba(168, 85, 247, 0.35);
+
+  z-index: 2;
+}
+
+/* IMPORTANT:
+   PHOTO DOES NOT ROTATE
+*/
+
+.member-photo img {
+  width: 100%;
+  height: 100%;
+
+  display: block;
+
+  border-radius: 50%;
+
+  object-fit: cover;
+  object-position: center;
+}
+
+/* =========================
+   EMPTY PHOTO
+========================= */
+
+.member-placeholder {
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(192, 132, 252, 0.2),
+      rgba(7, 3, 12, 0.95) 72%
+    );
+}
+
+.member-placeholder span {
+  font-family: "Orbitron", sans-serif;
+
+  font-size: 17px;
+  font-weight: 900;
+
+  letter-spacing: 3px;
+
+  color: #e0aaff;
+
+  text-shadow:
+    0 0 7px rgba(224, 170, 255, 1),
+    0 0 18px rgba(168, 85, 247, 0.7);
+}
+
+/* =========================
+   NAME + POSTING
+========================= */
+
+.member-info {
+  position: relative;
+  z-index: 3;
+
+  /* NAME + POSTING KONJAM KEELA */
+  margin-top: 5px;
+}
+
+.member-info > span {
+  display: block;
+
+  margin-bottom: 9px;
+
+  font-family: "Rajdhani", sans-serif;
+
+  font-size: 12px;
+  font-weight: 900;
+
+  letter-spacing: 2.5px;
+
+  text-transform: uppercase;
+
+  color: #d8a1ff;
+
+  text-shadow:
+    0 0 6px rgba(216, 161, 255, 1),
+    0 0 15px rgba(168, 85, 247, 0.55);
+}
+
+.member-info h3 {
+  margin: 0;
+
+  font-family: "Orbitron", sans-serif;
+
+  font-size: 14px;
+  font-weight: 900;
+
+  letter-spacing: 1.5px;
+
+  color: #ffffff;
+
+  text-shadow:
+    0 0 6px rgba(235, 207, 255, 1),
+    0 0 14px rgba(168, 85, 247, 0.8),
+    0 0 28px rgba(126, 34, 206, 0.4);
+}
+
+/* Small neon line under name */
+
+.member-info h3::after {
+  content: "";
+
+  display: block;
+
+  width: 28px;
+  height: 1px;
+
+  margin: 10px auto 0;
+
+  background: #c084fc;
+
+  box-shadow:
+    0 0 7px #c084fc,
+    0 0 14px rgba(192, 132, 252, 0.7);
+}
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media (max-width: 1100px) {
+
+  .association-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 55px 25px;
+  }
+
+  .member-photo-wrapper {
+    width: 170px;
+    height: 170px;
+
+    margin: 20px auto 35px;
+  }
+
+  .rotating-ring {
+    width: 165px;
+    height: 165px;
+  }
+
+  .member-photo {
+    width: 150px;
+    height: 150px;
+  }
+}
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 700px) {
+
+  .association-section {
+    padding: 75px 5% 80px;
+  }
+
+  .section-heading {
+    margin-bottom: 60px;
+  }
+
+  .section-heading h2 {
+    font-size: 24px;
+    letter-spacing: 2px;
+  }
+
+  .section-heading p {
+    font-size: 10px;
+    letter-spacing: 2px;
+  }
+
+  .association-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 55px 15px;
+  }
+
+  .member-photo-wrapper {
+    width: 140px;
+    height: 140px;
+
+    margin: 15px auto 30px;
+  }
+
+  .rotating-ring {
+    width: 135px;
+    height: 135px;
+
+    border-width: 2px;
+  }
+
+  .member-photo {
+    width: 120px;
+    height: 120px;
+  }
+
+  .member-info {
+    margin-top: 5px;
+  }
+
+  .member-info > span {
+    font-size: 9px;
+    letter-spacing: 1.5px;
+  }
+
+  .member-info h3 {
+    font-size: 10px;
+    letter-spacing: 0.8px;
+  }
+}
+
+/* =========================================
+   SMALL MOBILE
+========================================= */
+
+@media (max-width: 420px) {
+
+  .association-grid {
+    grid-template-columns: 1fr;
+    max-width: 280px;
+  }
+
+  .member-photo-wrapper {
+    width: 160px;
+    height: 160px;
+
+    margin: 20px auto 35px;
+  }
+
+  .rotating-ring {
+    width: 155px;
+    height: 155px;
+  }
+
+  .member-photo {
+    width: 140px;
+    height: 140px;
+  }
+}
+/* =========================================
+   ECLECTIC'26 — FOOTER
+========================================= */
+
+.site-footer {
+  position: relative;
+  width: 100%;
+  padding: 75px 7% 25px;
+  box-sizing: border-box;
+  overflow: hidden;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(10, 4, 20, 0.2),
+      rgba(5, 2, 12, 0.96)
+    );
+
+  border-top: 1px solid rgba(192, 132, 252, 0.3);
+}
+
+/* =========================
+   PURPLE GLOW
+========================= */
+
+.footer-glow {
+  position: absolute;
+  top: -100px;
+  left: 50%;
+
+  transform: translateX(-50%);
+
+  width: 500px;
+  height: 180px;
+
+  background: radial-gradient(
+    ellipse,
+    rgba(168, 85, 247, 0.2),
+    transparent 70%
+  );
+
+  filter: blur(20px);
+
+  pointer-events: none;
+}
+
+/* =========================
+   FOOTER CONTENT
+========================= */
+
+.footer-content {
+  position: relative;
+  z-index: 2;
+
+  width: 100%;
+  max-width: 1100px;
+
+  margin: 0 auto;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+
+  gap: 80px;
+}
+
+/* =========================
+   BRAND
+========================= */
+
+.footer-brand span {
+  display: block;
+
+  font-family: "Orbitron", sans-serif;
+
+  font-size: 30px;
+  font-weight: 900;
+
+  letter-spacing: 4px;
+
+  color: #ffffff;
+
+  text-shadow:
+    0 0 8px #ffffff,
+    0 0 18px #e0aaff,
+    0 0 35px rgba(168, 85, 247, 0.85);
+}
+
+.footer-brand h3 {
+  margin: 12px 0 5px;
+
+  font-family: "Rajdhani", sans-serif;
+
+  font-size: 16px;
+  font-weight: 800;
+
+  letter-spacing: 3px;
+
+  color: #d8a1ff;
+
+  text-shadow:
+    0 0 8px rgba(216, 161, 255, 0.85);
+}
+
+.footer-brand p {
+  margin: 0;
+
+  font-family: "Rajdhani", sans-serif;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  letter-spacing: 2px;
+
+  color: rgba(235, 220, 245, 0.65);
+}
+
+/* =========================
+   CONTACT
+========================= */
+
+.footer-contact {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.footer-contact h4 {
+  margin: 0 0 18px;
+
+  font-family: "Orbitron", sans-serif;
+
+  font-size: 13px;
+  font-weight: 900;
+
+  letter-spacing: 3px;
+
+  color: #ffffff;
+
+  text-shadow:
+    0 0 8px rgba(216, 161, 255, 0.9);
+}
+
+.footer-contact a {
+  display: inline-block;
+
+  margin-bottom: 11px;
+
+  font-family: "Rajdhani", sans-serif;
+
+  font-size: 14px;
+  font-weight: 700;
+
+  letter-spacing: 1px;
+
+  color: rgba(235, 220, 245, 0.78);
+
+  text-decoration: none;
+
+  transition:
+    color 0.25s ease,
+    text-shadow 0.25s ease,
+    transform 0.25s ease;
+}
+
+/* Hover */
+
+.footer-contact a:hover {
+  color: #ffffff;
+
+  text-shadow:
+    0 0 7px #ffffff,
+    0 0 16px #d8a1ff,
+    0 0 28px rgba(168, 85, 247, 0.8);
+
+  transform: translateX(5px);
+}
+
+/* =========================
+   DIVIDER
+========================= */
+
+.footer-line {
+  position: relative;
+  z-index: 2;
+
+  width: 100%;
+  max-width: 1100px;
+
+  height: 1px;
+
+  margin: 45px auto 20px;
+
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(192, 132, 252, 0.75),
+    transparent
+  );
+
+  box-shadow:
+    0 0 8px rgba(192, 132, 252, 0.5),
+    0 0 18px rgba(168, 85, 247, 0.25);
+}
+
+/* =========================
+   COPYRIGHT
+========================= */
+
+.footer-bottom {
+  position: relative;
+  z-index: 2;
+
+  width: 100%;
+  max-width: 1100px;
+
+  margin: 0 auto;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  gap: 20px;
+}
+
+.footer-bottom p,
+.footer-bottom span {
+  margin: 0;
+
+  font-family: "Rajdhani", sans-serif;
+
+  font-size: 10px;
+  font-weight: 700;
+
+  letter-spacing: 2px;
+
+  color: rgba(220, 200, 235, 0.55);
+}
+
+.footer-bottom span {
+  color: rgba(192, 132, 252, 0.7);
+
+  text-shadow:
+    0 0 8px rgba(192, 132, 252, 0.4);
+}
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 700px) {
+
+  .site-footer {
+    padding: 60px 7% 25px;
+  }
+
+  .footer-content {
+    grid-template-columns: 1fr;
+    gap: 45px;
+  }
+
+  .footer-brand span {
+    font-size: 24px;
+    letter-spacing: 3px;
+  }
+
+  .footer-brand h3 {
+    font-size: 14px;
+    letter-spacing: 2px;
+  }
+
+  .footer-brand p {
+    font-size: 10px;
+  }
+
+  .footer-contact a {
+    font-size: 13px;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+
+    text-align: center;
+
+    gap: 8px;
+  }
+
+  .footer-bottom p,
+  .footer-bottom span {
+    font-size: 9px;
+  }
+}
+
+/* =========================================================
+   ECLECTIC'26 — PREMIUM EVENT TICKET
+========================================================= */
+
+.event-pass-page {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  padding: 70px 20px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background:
+    radial-gradient(
+      circle at 15% 20%,
+      rgba(168, 85, 247, 0.22),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at 85% 75%,
+      rgba(217, 70, 239, 0.16),
+      transparent 30%
+    ),
+    linear-gradient(
+      135deg,
+      #090014,
+      #16002d,
+      #090014
+    );
+  font-family: "Rajdhani", sans-serif;
+}
+
+/* =========================================================
+   BACKGROUND GLOW
+========================================================= */
+
+.ticket-glow {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  filter: blur(80px);
+}
+
+.ticket-glow-one {
+  width: 350px;
+  height: 350px;
+  top: -150px;
+  left: -100px;
+  background: rgba(168, 85, 247, 0.18);
+}
+
+.ticket-glow-two {
+  width: 400px;
+  height: 400px;
+  bottom: -180px;
+  right: -100px;
+  background: rgba(192, 38, 211, 0.14);
+}
+
+/* =========================================================
+   TICKET
+========================================================= */
+
+.event-pass {
+  position: relative;
+  z-index: 2;
+  width: min(1000px, 94vw);
+  min-height: 440px;
+  display: grid;
+  grid-template-columns: 1fr 280px;
+  border-radius: 24px;
+  overflow: hidden;
+  background:
+    linear-gradient(
+      135deg,
+      rgba(42, 8, 76, 0.98),
+      rgba(20, 4, 40, 0.98)
+    );
+  border: 1px solid rgba(216, 180, 254, 0.28);
+  box-shadow:
+    0 25px 80px rgba(0, 0, 0, 0.65),
+    0 0 30px rgba(168, 85, 247, 0.18),
+    inset 0 0 35px rgba(168, 85, 247, 0.06);
+}
+
+/* =========================================================
+   MAIN TICKET
+========================================================= */
+
+.pass-main {
+  position: relative;
+  padding: 32px 40px 28px;
+  background:
+    radial-gradient(
+      circle at 75% 20%,
+      rgba(217, 70, 239, 0.18),
+      transparent 28%
+    ),
+    linear-gradient(
+      135deg,
+      rgba(63, 18, 108, 0.95),
+      rgba(20, 4, 40, 0.98)
+    );
+}
+
+/* =========================================================
+   TOP BRANDING
+========================================================= */
+
+.ticket-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.college-brand {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+/* LOGO — INCREASED */
+.pass-logo {
+  width: 72px;
+  height: 72px;
+  object-fit: contain;
+  border-radius: 50%;
+  background: #ffffff;
+  padding: 5px;
+  box-shadow:
+    0 0 8px rgba(255, 255, 255, 0.55),
+    0 0 18px rgba(192, 132, 252, 0.35);
+}
+
+.college-brand p {
+  margin: 0;
+  font-family: "Orbitron", sans-serif;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: #ffffff;
+}
+
+.college-brand span {
+  display: block;
+  margin-top: 4px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #d8a1ff;
+}
+
+.ticket-type {
+  font-family: "Orbitron", sans-serif;
+  font-size: 12px;
+  font-weight: 900;
+  line-height: 1.2;
+  letter-spacing: 2px;
+  text-align: right;
+  color: #ffffff;
+  text-shadow:
+    0 0 5px rgba(216, 161, 255, 0.45);
+}
+
+/* =========================================================
+   ECLECTIC TITLE
+========================================================= */
+
+.pass-event-title {
+  margin-top: 22px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.pass-event-title .title-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(216, 180, 254, 0.65)
+  );
+}
+
+.pass-event-title .title-line:last-child {
+  background: linear-gradient(
+    90deg,
+    rgba(216, 180, 254, 0.65),
+    transparent
+  );
+}
+
+/* SOFTER ECLECTIC GLOW */
+.pass-event-title h1 {
+  margin: 0;
+  font-family: "Orbitron", sans-serif;
+  font-size: clamp(34px, 5vw, 60px);
+  font-weight: 900;
+  letter-spacing: 4px;
+  color: #ffffff;
+  white-space: nowrap;
+
+  text-shadow:
+    0 0 3px rgba(255, 255, 255, 0.75),
+    0 0 8px rgba(216, 161, 255, 0.55),
+    0 0 16px rgba(168, 85, 247, 0.38);
+}
+
+.pass-event-title h1 span {
+  color: #d8a1ff;
+}
+
+.pass-event-title p {
+  position: absolute;
+  margin-top: 85px;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 4px;
+  color: rgba(235, 220, 245, 0.6);
+}
+
+/* =========================================================
+   EVENT HIGHLIGHT
+========================================================= */
+
+.event-highlight {
+  margin-top: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.event-highlight span {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: rgba(235, 220, 245, 0.6);
+}
+
+.event-highlight strong {
+  font-family: "Orbitron", sans-serif;
+  font-size: 14px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  color: #ffffff;
+
+  text-shadow:
+    0 0 5px rgba(216, 161, 255, 0.55),
+    0 0 10px rgba(168, 85, 247, 0.35);
+}
+
+/* =========================================================
+   DETAILS
+========================================================= */
+
+.pass-details {
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 0.8fr;
+  gap: 18px 28px;
+}
+
+.detail-box {
+  min-width: 0;
+}
+
+.detail-box small,
+.pass-bottom small,
+.side-info small {
+  display: block;
+  margin-bottom: 5px;
+  font-family: "Orbitron", sans-serif;
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: rgba(216, 161, 255, 0.65);
+}
+
+.detail-box p {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  color: #ffffff;
+  overflow-wrap: anywhere;
+  text-shadow:
+    0 0 8px rgba(255, 255, 255, 0.2);
+}
+
+.name-box p {
+  font-size: 18px;
+}
+
+.event-box p {
+  color: #e7c8ff;
+}
+
+/* =========================================================
+   BOTTOM
+========================================================= */
+
+.pass-bottom {
+  margin-top: 24px;
+  padding-top: 18px;
+  display: grid;
+  grid-template-columns: 1fr 1.4fr auto;
+  gap: 25px;
+  border-top: 1px dashed rgba(216, 180, 254, 0.35);
+}
+
+.pass-bottom p {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: #ffffff;
+}
+
+.amount-box {
+  text-align: right;
+}
+
+.amount-box p {
+  font-family: "Orbitron", sans-serif;
+  font-size: 22px;
+  color: #ffffff;
+
+  text-shadow:
+    0 0 4px rgba(255, 255, 255, 0.65),
+    0 0 9px rgba(216, 161, 255, 0.45);
+}
+
+/* =========================================================
+   SIDE TICKET / STUB
+========================================================= */
+
+.pass-side {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 28px 22px 20px;
+  background:
+    linear-gradient(
+      160deg,
+      rgba(92, 24, 130, 0.95),
+      rgba(30, 6, 52, 0.98)
+    );
+  border-left: 2px dashed rgba(255, 255, 255, 0.3);
+}
+
+.side-content {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.side-small-title {
+  margin: 0;
+  font-family: "Orbitron", sans-serif;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 4px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.side-content h2 {
+  margin: 0;
+  font-family: "Orbitron", sans-serif;
+  font-size: 42px;
+  font-weight: 900;
+  line-height: 1;
+  color: #ffffff;
+
+  text-shadow:
+    0 0 4px rgba(255, 255, 255, 0.7),
+    0 0 10px rgba(216, 161, 255, 0.5),
+    0 0 18px rgba(168, 85, 247, 0.4);
+}
+
+.side-divider {
+  width: 70%;
+  height: 1px;
+  margin: 12px 0;
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.side-pass-text {
+  margin: 0 0 16px;
+  font-family: "Orbitron", sans-serif;
+  font-size: 12px;
+  font-weight: 900;
+  line-height: 1.4;
+  letter-spacing: 3px;
+  text-align: center;
+  color: #ffffff;
+}
+
+/* QR */
+
+.pass-qr {
+  padding: 8px;
+  display: flex;
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow:
+    0 0 12px rgba(255, 255, 255, 0.2);
+}
+
+.scan-text {
+  margin: 9px 0 18px;
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.side-info {
+  width: 100%;
+  margin-top: 10px;
+  padding-top: 10px;
+  text-align: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.side-info strong {
+  display: block;
+  font-family: "Rajdhani", sans-serif;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: #ffffff;
+  overflow-wrap: anywhere;
+}
+
+.stub-bottom {
+  font-family: "Orbitron", sans-serif;
+  font-size: 7px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: rgba(255, 255, 255, 0.5);
+  text-align: center;
+}
+
+/* =========================================================
+   TRANSACTION
+========================================================= */
+
+.ticket-transaction {
+  position: relative;
+  z-index: 2;
+  width: min(1000px, 94vw);
+  margin-top: 18px;
+  padding: 12px 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  box-sizing: border-box;
+  border: 1px solid rgba(192, 132, 252, 0.15);
+  border-radius: 10px;
+  background: rgba(20, 4, 40, 0.65);
+  color: rgba(235, 220, 245, 0.5);
+}
+
+.ticket-transaction span {
+  font-family: "Orbitron", sans-serif;
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+
+.ticket-transaction strong {
+  font-size: 11px;
+  color: rgba(235, 220, 245, 0.8);
+  letter-spacing: 1px;
+  overflow-wrap: anywhere;
+}
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 800px) {
+
+  .event-pass-page {
+    padding: 25px 10px;
+  }
+
+  .event-pass {
+    width: 96vw;
+    grid-template-columns: 1fr;
+    border-radius: 18px;
+  }
+
+  .pass-main {
+    padding: 22px 20px;
+  }
+
+  
+/* =========================================================
+   BIG PLAIN LOGO
+========================================================= */
+
+.pass-logo {
+  width: 88px;
+  height: 88px;
+
+  object-fit: contain;
+
+  /* IMPORTANT */
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+
+  filter:
+    drop-shadow(0 0 7px rgba(216, 161, 255, 0.40))
+    drop-shadow(0 0 15px rgba(168, 85, 247, 0.20));
+}
+
+  .pass-side {
+    min-height: 320px;
+    border-left: none;
+    border-top: 2px dashed rgba(255, 255, 255, 0.3);
+  }
+
+  .pass-event-title h1 {
+    font-size: 34px;
+    letter-spacing: 2px;
+  }
+
+  .pass-event-title p {
+    margin-top: 65px;
+  }
+
+  .pass-details {
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .pass-bottom {
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+  }
+
+  .amount-box {
+    text-align: left;
+  }
+
+  .event-highlight {
+    margin-top: 32px;
+  }
+}
+
+/* =========================================================
+   MOBILE — ONE SCREEN PASS
+========================================================= */
+
+@media (max-width: 500px) {
+
+  .event-pass-page {
+    min-height: 100svh;
+    height: 100svh;
+    padding: 7px 6px;
+    justify-content: flex-start;
+    overflow: hidden;
+  }
+
+  .event-pass {
+    width: 100%;
+    max-width: 390px;
+    min-height: 0;
+    height: auto;
+    border-radius: 14px;
+  }
+
+  .pass-main {
+    padding: 12px 13px 10px;
+  }
+
+  /* BIGGER MOBILE LOGO */
+
+  .pass-logo {
+    width: 64px;
+    height: 64px;
+
+    background: transparent;
+    padding: 0;
+    border-radius: 0;
+
+    filter:
+      drop-shadow(0 0 5px rgba(216, 161, 255, 0.35));
+  }
+
+
+  .college-brand {
+    gap: 9px;
+  }
+
+  .college-brand p {
+    font-size: 8px;
+    letter-spacing: 0.8px;
+  }
+
+  .college-brand span {
+    font-size: 7px;
+    letter-spacing: 0.8px;
+  }
+
+  .ticket-type {
+    font-size: 7px;
+    letter-spacing: 1px;
+  }
+
+  /* ECLECTIC — SOFT NEON */
+  .pass-event-title {
+    margin-top: 9px;
+    gap: 7px;
+  }
+
+  .pass-event-title h1 {
+    font-size: 23px;
+    letter-spacing: 1.5px;
+
+    text-shadow:
+      0 0 2px rgba(255, 255, 255, 0.7),
+      0 0 6px rgba(216, 161, 255, 0.45),
+      0 0 10px rgba(168, 85, 247, 0.25);
+  }
+
+  .pass-event-title p {
+    margin-top: 48px;
+    font-size: 5px;
+    letter-spacing: 1.5px;
+  }
+
+  .event-highlight {
+    margin-top: 20px;
+    gap: 8px;
+  }
+
+  .event-highlight span {
+    font-size: 7px;
+    letter-spacing: 1px;
+  }
+
+  .event-highlight strong {
+    font-size: 9px;
+    letter-spacing: 1px;
+    text-shadow:
+      0 0 4px rgba(216, 161, 255, 0.4);
+  }
+
+  /* DETAILS — COMPACT */
+  .pass-details {
+    margin-top: 10px;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px 12px;
+  }
+
+  .detail-box small,
+  .pass-bottom small,
+  .side-info small {
+    margin-bottom: 2px;
+    font-size: 5.5px;
+    letter-spacing: 1px;
+  }
+
+  .detail-box p {
+    font-size: 9px;
+    letter-spacing: 0.3px;
+  }
+
+  .name-box p {
+    font-size: 11px;
+  }
+
+  /* BOTTOM */
+  .pass-bottom {
+    margin-top: 10px;
+    padding-top: 8px;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .pass-bottom p {
+    font-size: 8px;
+    letter-spacing: 0.5px;
+  }
+
+  .amount-box p {
+    font-size: 13px;
+  }
+
+  /* SIDE / QR */
+  .pass-side {
+    min-height: 0;
+    padding: 10px 12px 8px;
+    border-top: 1px dashed rgba(255, 255, 255, 0.25);
+  }
+
+  .side-small-title {
+    font-size: 7px;
+    letter-spacing: 2px;
+  }
+
+  .side-content h2 {
+    font-size: 23px;
+    text-shadow:
+      0 0 3px rgba(255, 255, 255, 0.6),
+      0 0 7px rgba(216, 161, 255, 0.35);
+  }
+
+  .side-divider {
+    margin: 5px 0;
+  }
+
+  .side-pass-text {
+    margin: 0 0 6px;
+    font-size: 7px;
+    letter-spacing: 1.5px;
+  }
+
+  .pass-qr {
+    padding: 4px;
+    border-radius: 6px;
+  }
+
+  .scan-text {
+    margin: 4px 0 5px;
+    font-size: 5px;
+    letter-spacing: 1px;
+  }
+
+  .side-info {
+    margin-top: 3px;
+    padding-top: 4px;
+  }
+
+  .side-info strong {
+    font-size: 7px;
+    letter-spacing: 0.5px;
+  }
+
+  .stub-bottom {
+    font-size: 4.5px;
+    letter-spacing: 1px;
+  }
+
+  /* TRANSACTION — COMPACT */
+  .ticket-transaction {
+    width: 100%;
+    max-width: 390px;
+    margin-top: 5px;
+    padding: 6px 8px;
+    border-radius: 7px;
+    gap: 5px;
+  }
+
+  .ticket-transaction span {
+    font-size: 5px;
+    letter-spacing: 1px;
+  }
+
+  .ticket-transaction strong {
+    font-size: 7px;
+    letter-spacing: 0.5px;
+  }
+}
+
+/* =========================================================
+   VERY SMALL PHONES
+========================================================= */
+
+@media (max-width: 380px) {
+
+  .event-pass-page {
+    padding: 5px 4px;
+  }
+
+  .pass-main {
+    padding: 9px 10px 8px;
+  }
+
+  .pass-logo {
+    width: 52px;
+    height: 52px;
+  }
+
+  .pass-event-title h1 {
+    font-size: 20px;
+  }
+
+  .event-highlight {
+    margin-top: 16px;
+  }
+
+  .pass-details {
+    margin-top: 8px;
+    gap: 6px 8px;
+  }
+
+  .detail-box p {
+    font-size: 8px;
+  }
+
+  .name-box p {
+    font-size: 10px;
+  }
+
+  .pass-bottom {
+    margin-top: 8px;
+    padding-top: 6px;
+  }
+
+  .pass-side {
+    padding: 8px 10px 6px;
+  }
+
+  .side-content h2 {
+    font-size: 21px;
+  }
+}

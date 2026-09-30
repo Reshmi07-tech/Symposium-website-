@@ -1,31 +1,35 @@
-
 import { useEffect, useState } from "react";
+
 import {
   collection,
   doc,
   getDoc,
   runTransaction,
 } from "firebase/firestore";
+
 import { db } from "./firebase";
 import departmentLogo from "./department-logo.jpeg";
 
 const TECHNICAL_EVENTS = [
-  "Paper Presentation",
-  "Project Expo",
-  "Coding Challenge",
+  "Idea Hackathon",
+  "Comp Finder",
   "Circuit Debugging",
-  "Technical Quiz",
+  "Code Crack",
+  "Mind Spark",
 ];
 
 const NON_TECHNICAL_EVENTS = [
-  "Connections",
-  "Treasure Hunt",
-  "Dumb Charades",
-  "Photography",
-  "Meme Creation",
+  "E-Sports",
+  "Reels Making",
+  "Carrom / Volleyball",
+  "Sound Track",
+  "Blind Cups",
 ];
 
-const CAPACITY = 10;
+const SPECIAL_EVENT = "Fit Tech";
+
+const NON_TECHNICAL_CAPACITY = 20;
+const SPECIAL_EVENT_CAPACITY = 20;
 
 function Register() {
   const [fullName, setFullName] = useState("");
@@ -36,10 +40,12 @@ function Register() {
 
   const [technicalEvent, setTechnicalEvent] = useState("");
   const [nonTechnicalEvent, setNonTechnicalEvent] = useState("");
+  const [specialEvent, setSpecialEvent] = useState("");
+
   const [foodPreference, setFoodPreference] = useState("");
 
-  const [technicalCounts, setTechnicalCounts] = useState({});
   const [nonTechnicalCounts, setNonTechnicalCounts] = useState({});
+  const [specialEventCount, setSpecialEventCount] = useState(0);
 
   const [loadingCounts, setLoadingCounts] = useState(true);
   const [processing, setProcessing] = useState(false);
@@ -54,22 +60,9 @@ function Register() {
       try {
         setLoadingCounts(true);
 
-        const technicalData = {};
         const nonTechnicalData = {};
 
-        for (const eventName of TECHNICAL_EVENTS) {
-          const eventId = `technical_${eventName
-            .replace(/\s+/g, "_")
-            .replace(/[^a-zA-Z0-9_]/g, "")}`;
-
-          const eventRef = doc(db, "eventCapacity", eventId);
-          const eventSnap = await getDoc(eventRef);
-
-          technicalData[eventName] = eventSnap.exists()
-            ? eventSnap.data().count || 0
-            : 0;
-        }
-
+        // Non-technical events - MAX 20
         for (const eventName of NON_TECHNICAL_EVENTS) {
           const eventId = `nonTechnical_${eventName
             .replace(/\s+/g, "_")
@@ -83,11 +76,31 @@ function Register() {
             : 0;
         }
 
-        setTechnicalCounts(technicalData);
+        // Special Event - Fit Tech - MAX 20
+        const specialEventId = `special_${SPECIAL_EVENT
+          .replace(/\s+/g, "_")
+          .replace(/[^a-zA-Z0-9_]/g, "")}`;
+
+        const specialEventRef = doc(
+          db,
+          "eventCapacity",
+          specialEventId
+        );
+
+        const specialEventSnap = await getDoc(specialEventRef);
+
+        const specialCount = specialEventSnap.exists()
+          ? specialEventSnap.data().count || 0
+          : 0;
+
         setNonTechnicalCounts(nonTechnicalData);
+        setSpecialEventCount(specialCount);
       } catch (error) {
         console.error("Failed to fetch event counts:", error);
-        setError("Unable to load event availability. Please refresh.");
+
+        setError(
+          "Unable to load event availability. Please refresh."
+        );
       } finally {
         setLoadingCounts(false);
       }
@@ -112,9 +125,9 @@ function Register() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     setError("");
 
+    // Personal details
     if (
       !fullName ||
       !email ||
@@ -126,24 +139,41 @@ function Register() {
       return;
     }
 
-    if (!technicalEvent || !nonTechnicalEvent) {
-      setError(
-        "Please select one Technical Event and one Non-Technical Event."
-      );
+    // Technical event is compulsory
+    if (!technicalEvent) {
+      setError("Please select one Technical Event.");
       return;
     }
 
+    // Non-technical event is optional
+
+    // Special event is optional
+
+    // Food preference
     if (!foodPreference) {
       setError("Please select your Food Preference.");
       return;
     }
 
+    // Check Non-Technical capacity
     if (
-      technicalCounts[technicalEvent] >= CAPACITY ||
-      nonTechnicalCounts[nonTechnicalEvent] >= CAPACITY
+      nonTechnicalEvent &&
+      nonTechnicalCounts[nonTechnicalEvent] >=
+        NON_TECHNICAL_CAPACITY
     ) {
       setError(
-        "One of your selected events is already FULL. Please select another event."
+        "The selected Non-Technical Event is FULL. Please select another event."
+      );
+      return;
+    }
+
+    // Check Special Event capacity
+    if (
+      specialEvent &&
+      specialEventCount >= SPECIAL_EVENT_CAPACITY
+    ) {
+      setError(
+        "Fit Tech is FULL. Please continue without the Special Event."
       );
       return;
     }
@@ -151,14 +181,10 @@ function Register() {
     try {
       setProcessing(true);
 
+      // Technical event - unlimited
       const technicalEventId = createEventId(
         "technical",
         technicalEvent
-      );
-
-      const nonTechnicalEventId = createEventId(
-        "nonTechnical",
-        nonTechnicalEvent
       );
 
       const technicalRef = doc(
@@ -167,41 +193,114 @@ function Register() {
         technicalEventId
       );
 
-      const nonTechnicalRef = doc(
-        db,
-        "eventCapacity",
-        nonTechnicalEventId
-      );
+      // Non-technical event
+      let nonTechnicalRef = null;
 
+      if (nonTechnicalEvent) {
+        const nonTechnicalEventId = createEventId(
+          "nonTechnical",
+          nonTechnicalEvent
+        );
+
+        nonTechnicalRef = doc(
+          db,
+          "eventCapacity",
+          nonTechnicalEventId
+        );
+      }
+
+      // Special event - Fit Tech
+      let specialEventRef = null;
+
+      if (specialEvent) {
+        const specialEventId = createEventId(
+          "special",
+          specialEvent
+        );
+
+        specialEventRef = doc(
+          db,
+          "eventCapacity",
+          specialEventId
+        );
+      }
+
+      // Registration document
       const registrationRef = doc(
         collection(db, "registrations")
       );
 
       await runTransaction(db, async (transaction) => {
-        const technicalSnap = await transaction.get(technicalRef);
-        const nonTechnicalSnap = await transaction.get(
-          nonTechnicalRef
-        );
+        /* =========================
+           TECHNICAL EVENT
+           NO LIMIT
+        ========================= */
 
-        const technicalCurrentCount = technicalSnap.exists()
-          ? technicalSnap.data().count || 0
-          : 0;
+        const technicalSnap =
+          await transaction.get(technicalRef);
 
-        const nonTechnicalCurrentCount = nonTechnicalSnap.exists()
-          ? nonTechnicalSnap.data().count || 0
-          : 0;
+        const technicalCurrentCount =
+          technicalSnap.exists()
+            ? technicalSnap.data().count || 0
+            : 0;
 
-        if (technicalCurrentCount >= CAPACITY) {
-          throw new Error(
-            `TECHNICAL_FULL:${technicalEvent}`
-          );
+        /* =========================
+           NON-TECHNICAL EVENT
+           LIMIT 20
+        ========================= */
+
+        let nonTechnicalCurrentCount = 0;
+        let nonTechnicalSnap = null;
+
+        if (nonTechnicalRef) {
+          nonTechnicalSnap =
+            await transaction.get(nonTechnicalRef);
+
+          nonTechnicalCurrentCount =
+            nonTechnicalSnap.exists()
+              ? nonTechnicalSnap.data().count || 0
+              : 0;
+
+          if (
+            nonTechnicalCurrentCount >=
+            NON_TECHNICAL_CAPACITY
+          ) {
+            throw new Error(
+              `NON_TECHNICAL_FULL:${nonTechnicalEvent}`
+            );
+          }
         }
 
-        if (nonTechnicalCurrentCount >= CAPACITY) {
-          throw new Error(
-            `NON_TECHNICAL_FULL:${nonTechnicalEvent}`
-          );
+        /* =========================
+           SPECIAL EVENT
+           FIT TECH - LIMIT 20
+        ========================= */
+
+        let specialCurrentCount = 0;
+        let specialSnap = null;
+
+        if (specialEventRef) {
+          specialSnap =
+            await transaction.get(specialEventRef);
+
+          specialCurrentCount = specialSnap.exists()
+            ? specialSnap.data().count || 0
+            : 0;
+
+          if (
+            specialCurrentCount >=
+            SPECIAL_EVENT_CAPACITY
+          ) {
+            throw new Error(
+              "SPECIAL_EVENT_FULL:Fit Tech"
+            );
+          }
         }
+
+        /* =========================
+           UPDATE TECHNICAL COUNT
+           NO CAPACITY CHECK
+        ========================= */
 
         transaction.set(
           technicalRef,
@@ -209,21 +308,47 @@ function Register() {
             eventType: "Technical",
             eventName: technicalEvent,
             count: technicalCurrentCount + 1,
-            capacity: CAPACITY,
           },
           { merge: true }
         );
 
-        transaction.set(
-          nonTechnicalRef,
-          {
-            eventType: "Non-Technical",
-            eventName: nonTechnicalEvent,
-            count: nonTechnicalCurrentCount + 1,
-            capacity: CAPACITY,
-          },
-          { merge: true }
-        );
+        /* =========================
+           UPDATE NON-TECHNICAL COUNT
+        ========================= */
+
+        if (nonTechnicalRef) {
+          transaction.set(
+            nonTechnicalRef,
+            {
+              eventType: "Non-Technical",
+              eventName: nonTechnicalEvent,
+              count: nonTechnicalCurrentCount + 1,
+              capacity: NON_TECHNICAL_CAPACITY,
+            },
+            { merge: true }
+          );
+        }
+
+        /* =========================
+           UPDATE SPECIAL EVENT COUNT
+        ========================= */
+
+        if (specialEventRef) {
+          transaction.set(
+            specialEventRef,
+            {
+              eventType: "Special Event",
+              eventName: specialEvent,
+              count: specialCurrentCount + 1,
+              capacity: SPECIAL_EVENT_CAPACITY,
+            },
+            { merge: true }
+          );
+        }
+
+        /* =========================
+           REGISTRATION DOCUMENT
+        ========================= */
 
         transaction.set(registrationRef, {
           fullName,
@@ -231,14 +356,27 @@ function Register() {
           phone,
           department,
           collegeName,
+
           technicalEvent,
-          nonTechnicalEvent,
+
+          nonTechnicalEvent:
+            nonTechnicalEvent || "",
+
+          specialEvent: specialEvent || "",
+
           foodPreference,
-          registrationDate: new Date().toISOString(),
+
+          registrationDate:
+            new Date().toISOString(),
+
           approvalStatus: "Pending",
           paymentStatus: "Pending",
         });
       });
+
+      /* =========================
+         SESSION STORAGE
+      ========================= */
 
       const registrationData = {
         fullName,
@@ -246,8 +384,15 @@ function Register() {
         phone,
         department,
         collegeName,
+
         technicalEvent,
-        nonTechnicalEvent,
+
+        nonTechnicalEvent:
+          nonTechnicalEvent || "",
+
+        specialEvent:
+          specialEvent || "",
+
         foodPreference,
       };
 
@@ -261,37 +406,32 @@ function Register() {
         JSON.stringify(registrationData)
       );
 
+      /* =========================
+         GO TO PAYMENT
+      ========================= */
+
       window.location.href = "/payment";
     } catch (error) {
       console.error("Registration failed:", error);
 
-      if (error.message?.startsWith("TECHNICAL_FULL:")) {
-        const fullEvent = error.message.replace(
-          "TECHNICAL_FULL:",
-          ""
-        );
+      /* =========================
+         NON-TECHNICAL FULL
+      ========================= */
 
-        setTechnicalCounts((prev) => ({
-          ...prev,
-          [fullEvent]: CAPACITY,
-        }));
-
-        setTechnicalEvent("");
-
-        setError(
-          `${fullEvent} is FULL. Please select another Technical Event.`
-        );
-      } else if (
-        error.message?.startsWith("NON_TECHNICAL_FULL:")
+      if (
+        error.message?.startsWith(
+          "NON_TECHNICAL_FULL:"
+        )
       ) {
-        const fullEvent = error.message.replace(
-          "NON_TECHNICAL_FULL:",
-          ""
-        );
+        const fullEvent =
+          error.message.replace(
+            "NON_TECHNICAL_FULL:",
+            ""
+          );
 
         setNonTechnicalCounts((prev) => ({
           ...prev,
-          [fullEvent]: CAPACITY,
+          [fullEvent]: NON_TECHNICAL_CAPACITY,
         }));
 
         setNonTechnicalEvent("");
@@ -299,7 +439,33 @@ function Register() {
         setError(
           `${fullEvent} is FULL. Please select another Non-Technical Event.`
         );
-      } else {
+      }
+
+      /* =========================
+         SPECIAL EVENT FULL
+      ========================= */
+
+      else if (
+        error.message?.startsWith(
+          "SPECIAL_EVENT_FULL:"
+        )
+      ) {
+        setSpecialEventCount(
+          SPECIAL_EVENT_CAPACITY
+        );
+
+        setSpecialEvent("");
+
+        setError(
+          "Fit Tech is FULL. Please continue without the Special Event."
+        );
+      }
+
+      /* =========================
+         OTHER ERROR
+      ========================= */
+
+      else {
         setError(
           "Registration failed. Please try again."
         );
@@ -310,12 +476,8 @@ function Register() {
   };
 
   /* =========================
-     EVENT COUNT DISPLAY
+     EVENT COUNT
   ========================= */
-
-  const getTechnicalCount = (eventName) => {
-    return technicalCounts[eventName] || 0;
-  };
 
   const getNonTechnicalCount = (eventName) => {
     return nonTechnicalCounts[eventName] || 0;
@@ -345,44 +507,58 @@ function Register() {
 
         <form onSubmit={handleSubmit}>
 
-          {/* PERSONAL DETAILS */}
+          {/* =========================
+              PERSONAL DETAILS
+          ========================= */}
 
           <input
             type="text"
             placeholder="Full Name"
             value={fullName}
-            onChange={(e) => setFullName(e.target.value)}
+            onChange={(e) =>
+              setFullName(e.target.value)
+            }
           />
 
           <input
             type="email"
             placeholder="Email"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) =>
+              setEmail(e.target.value)
+            }
           />
 
           <input
             type="tel"
             placeholder="Phone Number"
             value={phone}
-            onChange={(e) => setPhone(e.target.value)}
+            onChange={(e) =>
+              setPhone(e.target.value)
+            }
           />
 
           <input
             type="text"
             placeholder="Department"
             value={department}
-            onChange={(e) => setDepartment(e.target.value)}
+            onChange={(e) =>
+              setDepartment(e.target.value)
+            }
           />
 
           <input
             type="text"
             placeholder="College Name"
             value={collegeName}
-            onChange={(e) => setCollegeName(e.target.value)}
+            onChange={(e) =>
+              setCollegeName(e.target.value)
+            }
           />
 
-          {/* FOOD PREFERENCE */}
+          {/* =========================
+              FOOD PREFERENCE
+          ========================= */}
 
           <div className="event-section">
             <h2>FOOD PREFERENCE</h2>
@@ -398,11 +574,16 @@ function Register() {
                   type="radio"
                   name="foodPreference"
                   value="Veg"
-                  checked={foodPreference === "Veg"}
+                  checked={
+                    foodPreference === "Veg"
+                  }
                   onChange={(e) =>
-                    setFoodPreference(e.target.value)
+                    setFoodPreference(
+                      e.target.value
+                    )
                   }
                 />
+
                 <span>🥬 Veg</span>
               </label>
 
@@ -411,24 +592,33 @@ function Register() {
                   type="radio"
                   name="foodPreference"
                   value="Non-Veg"
-                  checked={foodPreference === "Non-Veg"}
+                  checked={
+                    foodPreference === "Non-Veg"
+                  }
                   onChange={(e) =>
-                    setFoodPreference(e.target.value)
+                    setFoodPreference(
+                      e.target.value
+                    )
                   }
                 />
+
                 <span>🍗 Non-Veg</span>
               </label>
 
             </div>
           </div>
 
-          {/* TECHNICAL EVENTS */}
+          {/* =========================
+              TECHNICAL EVENTS
+          ========================= */}
 
           <div className="event-section">
+
             <h2>TECHNICAL EVENTS</h2>
 
             <p className="event-note">
               Select any ONE technical event
+              (Compulsory)
             </p>
 
             {loadingCounts ? (
@@ -438,56 +628,45 @@ function Register() {
             ) : (
               <div className="event-list">
 
-                {TECHNICAL_EVENTS.map((event) => {
-                  const count = getTechnicalCount(event);
-                  const isFull = count >= CAPACITY;
+                {TECHNICAL_EVENTS.map((event) => (
+                  <label
+                    key={event}
+                    className="event-available"
+                  >
+                    <input
+                      type="radio"
+                      name="technicalEvent"
+                      value={event}
+                      checked={
+                        technicalEvent === event
+                      }
+                      onChange={(e) =>
+                        setTechnicalEvent(
+                          e.target.value
+                        )
+                      }
+                    />
 
-                  return (
-                    <label
-                      key={event}
-                      className={isFull ? "event-full" : ""}
-                    >
-                      <input
-                        type="radio"
-                        name="technicalEvent"
-                        value={event}
-                        checked={technicalEvent === event}
-                        disabled={isFull}
-                        onChange={(e) =>
-                          setTechnicalEvent(e.target.value)
-                        }
-                      />
-
-                      <span>
-                        {event}
-
-                        <small
-                          className={
-                            isFull
-                              ? "event-full-count"
-                              : "event-seat-count"
-                          }
-                        >
-                          {isFull
-                            ? "FULL 🔒"
-                            : `${count}/${CAPACITY}`}
-                        </small>
-                      </span>
-                    </label>
-                  );
-                })}
+                    <span>{event}</span>
+                  </label>
+                ))}
 
               </div>
             )}
+
           </div>
 
-          {/* NON-TECHNICAL EVENTS */}
+          {/* =========================
+              NON-TECHNICAL EVENTS
+          ========================= */}
 
           <div className="event-section">
+
             <h2>NON-TECHNICAL EVENTS</h2>
 
             <p className="event-note">
               Select any ONE non-technical event
+              (Optional)
             </p>
 
             {loadingCounts ? (
@@ -497,54 +676,144 @@ function Register() {
             ) : (
               <div className="event-list">
 
-                {NON_TECHNICAL_EVENTS.map((event) => {
-                  const count = getNonTechnicalCount(event);
-                  const isFull = count >= CAPACITY;
+                {NON_TECHNICAL_EVENTS.map(
+                  (event) => {
+                    const count =
+                      getNonTechnicalCount(
+                        event
+                      );
 
-                  return (
-                    <label
-                      key={event}
-                      className={isFull ? "event-full" : ""}
-                    >
-                      <input
-                        type="radio"
-                        name="nonTechnicalEvent"
-                        value={event}
-                        checked={
-                          nonTechnicalEvent === event
+                    const isFull =
+                      count >=
+                      NON_TECHNICAL_CAPACITY;
+
+                    return (
+                      <label
+                        key={event}
+                        className={
+                          isFull
+                            ? "event-full"
+                            : ""
                         }
-                        disabled={isFull}
-                        onChange={(e) =>
-                          setNonTechnicalEvent(
-                            e.target.value
-                          )
-                        }
-                      />
+                      >
 
-                      <span>
-                        {event}
-
-                        <small
-                          className={
-                            isFull
-                              ? "event-full-count"
-                              : "event-seat-count"
+                        <input
+                          type="radio"
+                          name="nonTechnicalEvent"
+                          value={event}
+                          checked={
+                            nonTechnicalEvent ===
+                            event
                           }
-                        >
-                          {isFull
-                            ? "FULL 🔒"
-                            : `${count}/${CAPACITY}`}
-                        </small>
-                      </span>
-                    </label>
-                  );
-                })}
+                          disabled={isFull}
+                          onChange={(e) =>
+                            setNonTechnicalEvent(
+                              e.target.value
+                            )
+                          }
+                        />
+
+                        <span>
+                          {event}
+
+                          <small
+                            className={
+                              isFull
+                                ? "event-full-count"
+                                : "event-seat-count"
+                            }
+                          >
+                            {isFull
+                              ? "FULL 🔒"
+                              : `${count}/${NON_TECHNICAL_CAPACITY}`}
+                          </small>
+                        </span>
+
+                      </label>
+                    );
+                  }
+                )}
 
               </div>
             )}
+
           </div>
 
-          {/* ERROR */}
+          {/* =========================
+              SPECIAL EVENT
+          ========================= */}
+
+          <div className="event-section">
+
+            <h2>SPECIAL EVENT</h2>
+
+            <p className="event-note">
+              Select Special Event (Optional)
+            </p>
+
+            {loadingCounts ? (
+              <p className="event-note">
+                Loading availability...
+              </p>
+            ) : (
+              <div className="event-list">
+
+                <label
+                  className={
+                    specialEventCount >=
+                    SPECIAL_EVENT_CAPACITY
+                      ? "event-full"
+                      : "event-available"
+                  }
+                >
+
+                  <input
+                    type="radio"
+                    name="specialEvent"
+                    value={SPECIAL_EVENT}
+                    checked={
+                      specialEvent ===
+                      SPECIAL_EVENT
+                    }
+                    disabled={
+                      specialEventCount >=
+                      SPECIAL_EVENT_CAPACITY
+                    }
+                    onChange={(e) =>
+                      setSpecialEvent(
+                        e.target.value
+                      )
+                    }
+                  />
+
+                  <span>
+                    🏃 {SPECIAL_EVENT}
+
+                    <small
+                      className={
+                        specialEventCount >=
+                        SPECIAL_EVENT_CAPACITY
+                          ? "event-full-count"
+                          : "event-seat-count"
+                      }
+                    >
+                      {specialEventCount >=
+                      SPECIAL_EVENT_CAPACITY
+                        ? "FULL 🔒"
+                        : `${specialEventCount}/${SPECIAL_EVENT_CAPACITY}`}
+                    </small>
+                  </span>
+
+                </label>
+
+              </div>
+            )}
+
+          </div>
+
+          {/* =========================
+              ERROR
+          ========================= */}
 
           {error && (
             <p className="event-error">
@@ -552,14 +821,20 @@ function Register() {
             </p>
           )}
 
-          {/* SUBMIT */}
+          {/* =========================
+              SUBMIT
+          ========================= */}
 
           <button
             type="submit"
             className="submit-btn"
-            disabled={processing || loadingCounts}
+            disabled={
+              processing || loadingCounts
+            }
           >
-            {processing ? "PROCESSING..." : "CONTINUE"}
+            {processing
+              ? "PROCESSING..."
+              : "CONTINUE"}
           </button>
 
         </form>

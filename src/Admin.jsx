@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 
 import {
@@ -10,27 +9,40 @@ import {
 } from "firebase/firestore";
 
 import { db } from "./firebase";
+
 import "./Admin.css";
 
 function Admin() {
   const [registrations, setRegistrations] = useState([]);
+
   const [filter, setFilter] = useState("All");
 
+  /* =========================
+     EVENT LISTS
+  ========================= */
+
   const technicalEvents = [
-    "Paper Presentation",
-    "Project Expo",
-    "Coding Challenge",
+    "Idea Hackathon",
+    "Comp Finder",
     "Circuit Debugging",
-    "Technical Quiz",
+    "Code Crack",
+    "Mind Spark",
   ];
 
   const nonTechnicalEvents = [
-    "Connections",
-    "Treasure Hunt",
-    "Dumb Charades",
-    "Photography",
-    "Meme Creation",
+    "E-Sports",
+    "Reels Making",
+    "Carrom / Volleyball",
+    "Sound Track",
+    "Blind Cups",
   ];
+
+  const specialEvents = [
+    "Fit Tech",
+  ];
+
+  const NON_TECHNICAL_CAPACITY = 20;
+  const SPECIAL_EVENT_CAPACITY = 20;
 
   /* =========================
      APPROVE
@@ -119,29 +131,33 @@ function Admin() {
      FOOD COUNTS
   ========================= */
 
-  const vegCount = registrations.filter((registration) => {
-    const food = String(
-      registration.foodPreference || ""
-    )
-      .trim()
-      .toLowerCase();
+  const vegCount = registrations.filter(
+    (registration) => {
+      const food = String(
+        registration.foodPreference || ""
+      )
+        .trim()
+        .toLowerCase();
 
-    return food === "veg";
-  }).length;
+      return food === "veg";
+    }
+  ).length;
 
-  const nonVegCount = registrations.filter((registration) => {
-    const food = String(
-      registration.foodPreference || ""
-    )
-      .trim()
-      .toLowerCase();
+  const nonVegCount = registrations.filter(
+    (registration) => {
+      const food = String(
+        registration.foodPreference || ""
+      )
+        .trim()
+        .toLowerCase();
 
-    return (
-      food === "non-veg" ||
-      food === "non veg" ||
-      food === "nonveg"
-    );
-  }).length;
+      return (
+        food === "non-veg" ||
+        food === "non veg" ||
+        food === "nonveg"
+      );
+    }
+  ).length;
 
   /* =========================
      EVENT COUNT
@@ -151,7 +167,8 @@ function Admin() {
     return registrations.filter(
       (registration) =>
         registration.technicalEvent === eventName ||
-        registration.nonTechnicalEvent === eventName
+        registration.nonTechnicalEvent === eventName ||
+        registration.specialEvent === eventName
     ).length;
   };
 
@@ -164,11 +181,17 @@ function Admin() {
       if (filter === "All") return true;
 
       if (filter === "Approved") {
-        return registration.approvalStatus === "Approved";
+        return (
+          registration.approvalStatus ===
+          "Approved"
+        );
       }
 
       if (filter === "Pending") {
-        return registration.approvalStatus !== "Approved";
+        return (
+          registration.approvalStatus !==
+          "Approved"
+        );
       }
 
       return true;
@@ -177,12 +200,15 @@ function Admin() {
   return (
     <div className="admin-page">
 
-      {/* TITLE */}
+      {/* =========================
+          TITLE
+      ========================= */}
 
       <h1>ECLECTIC'26 ADMIN</h1>
 
       <p className="admin-total">
-        Total Registrations: {registrations.length}
+        Total Registrations:{" "}
+        {registrations.length}
       </p>
 
       {/* =========================
@@ -211,6 +237,7 @@ function Admin() {
 
       {/* =========================
           TECHNICAL EVENTS
+          NO LIMIT
       ========================= */}
 
       <div className="admin-events-section">
@@ -220,27 +247,20 @@ function Admin() {
         <div className="admin-event-grid">
 
           {technicalEvents.map((event) => {
-            const count = getEventCount(event);
-            const isFull = count >= 10;
+            const count =
+              getEventCount(event);
 
             return (
               <div
                 key={event}
-                className={`admin-event-card ${
-                  isFull ? "event-full" : ""
-                }`}
+                className="admin-event-card"
               >
                 <h3>{event}</h3>
 
                 <p>
-                  <strong>{count}</strong> / 10
+                  <strong>{count}</strong>{" "}
+                  Registered
                 </p>
-
-                {isFull && (
-                  <span className="full-badge">
-                    🔒 FULL
-                  </span>
-                )}
               </div>
             );
           })}
@@ -251,6 +271,7 @@ function Admin() {
 
       {/* =========================
           NON-TECHNICAL EVENTS
+          LIMIT 20
       ========================= */}
 
       <div className="admin-events-section">
@@ -260,8 +281,12 @@ function Admin() {
         <div className="admin-event-grid">
 
           {nonTechnicalEvents.map((event) => {
-            const count = getEventCount(event);
-            const isFull = count >= 10;
+            const count =
+              getEventCount(event);
+
+            const isFull =
+              count >=
+              NON_TECHNICAL_CAPACITY;
 
             return (
               <div
@@ -270,10 +295,12 @@ function Admin() {
                   isFull ? "event-full" : ""
                 }`}
               >
+
                 <h3>{event}</h3>
 
                 <p>
-                  <strong>{count}</strong> / 10
+                  <strong>{count}</strong> /{" "}
+                  {NON_TECHNICAL_CAPACITY}
                 </p>
 
                 {isFull && (
@@ -281,6 +308,55 @@ function Admin() {
                     🔒 FULL
                   </span>
                 )}
+
+              </div>
+            );
+          })}
+
+        </div>
+
+      </div>
+
+      {/* =========================
+          SPECIAL EVENTS
+          FIT TECH - LIMIT 20
+      ========================= */}
+
+      <div className="admin-events-section">
+
+        <h2>SPECIAL EVENT</h2>
+
+        <div className="admin-event-grid">
+
+          {specialEvents.map((event) => {
+            const count =
+              getEventCount(event);
+
+            const isFull =
+              count >=
+              SPECIAL_EVENT_CAPACITY;
+
+            return (
+              <div
+                key={event}
+                className={`admin-event-card ${
+                  isFull ? "event-full" : ""
+                }`}
+              >
+
+                <h3>{event}</h3>
+
+                <p>
+                  <strong>{count}</strong> /{" "}
+                  {SPECIAL_EVENT_CAPACITY}
+                </p>
+
+                {isFull && (
+                  <span className="full-badge">
+                    🔒 FULL
+                  </span>
+                )}
+
               </div>
             );
           })}
@@ -295,15 +371,21 @@ function Admin() {
 
       <div className="admin-filters">
 
-        <button onClick={() => setFilter("All")}>
+        <button
+          onClick={() => setFilter("All")}
+        >
           All
         </button>
 
-        <button onClick={() => setFilter("Pending")}>
+        <button
+          onClick={() => setFilter("Pending")}
+        >
           Pending
         </button>
 
-        <button onClick={() => setFilter("Approved")}>
+        <button
+          onClick={() => setFilter("Approved")}
+        >
           Approved
         </button>
 
@@ -320,7 +402,9 @@ function Admin() {
             className="admin-card"
           >
 
-            <h2>{registration.fullName}</h2>
+            <h2>
+              {registration.fullName}
+            </h2>
 
             <p>
               <strong>Email:</strong>{" "}
@@ -344,7 +428,14 @@ function Admin() {
 
             <p>
               <strong>Non-Technical:</strong>{" "}
-              {registration.nonTechnicalEvent}
+              {registration.nonTechnicalEvent ||
+                "Not selected"}
+            </p>
+
+            <p>
+              <strong>Special Event:</strong>{" "}
+              {registration.specialEvent ||
+                "Not selected"}
             </p>
 
             <p>
@@ -397,10 +488,14 @@ function Admin() {
               </span>
             </p>
 
+            {/* APPROVE */}
+
             <button
               className="approve-btn"
               onClick={() =>
-                handleApprove(registration.id)
+                handleApprove(
+                  registration.id
+                )
               }
               disabled={
                 registration.approvalStatus ===
@@ -413,10 +508,14 @@ function Admin() {
                 : "Approve Registration"}
             </button>
 
+            {/* DELETE */}
+
             <button
               className="delete-btn"
               onClick={() =>
-                handleDelete(registration.id)
+                handleDelete(
+                  registration.id
+                )
               }
             >
               Delete Registration
