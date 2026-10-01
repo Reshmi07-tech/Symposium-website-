@@ -6761,3 +6761,70 @@ body {
     font-size: 21px;
   }
 }
+/* =========================================
+   ABOUT ECLECTIC'26 — NEON BOX
+========================================= */
+
+.about-section {
+  width: 88%;
+  max-width: 1050px;
+  margin: 80px auto;
+  padding: 45px 40px;
+
+  text-align: center;
+
+  background: rgba(20, 8, 35, 0.72);
+
+  border: 1px solid rgba(190, 70, 255, 0.7);
+  border-radius: 25px;
+
+  box-shadow:
+    0 0 15px rgba(176, 38, 255, 0.35),
+    0 0 35px rgba(138, 43, 226, 0.2),
+    inset 0 0 25px rgba(176, 38, 255, 0.08);
+
+  backdrop-filter: blur(10px);
+}
+
+.about-title {
+  font-size: 42px;
+  font-weight: 900;
+  letter-spacing: 3px;
+
+  color: #ffffff;
+
+  text-shadow:
+    0 0 8px #b026ff,
+    0 0 18px #b026ff,
+    0 0 35px #8a2be2,
+    0 0 60px #6a0dad;
+
+  margin-bottom: 28px;
+}
+
+.about-section p {
+  max-width: 900px;
+  margin: 0 auto 18px;
+
+  color: #eeeeee;
+  font-size: 17px;
+  line-height: 1.8;
+}
+
+.event-types {
+  display: flex;
+  justify-content: center;
+  gap: 35px;
+  margin-top: 30px;
+  flex-wrap: wrap;
+}
+
+.event-types span {
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: 700;
+
+  text-shadow:
+    0 0 8px #b026ff,
+    0 0 15px #8a2be2;
+}

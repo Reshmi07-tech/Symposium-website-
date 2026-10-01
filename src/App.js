@@ -12,7 +12,8 @@ import reshmi from "./members/reshmi.jpg";
 import rubesh from "./members/rubesh.jpg";
 import elango from "./members/elango.jpg";
 import kayalvizhi from "./members/kayalvizhi.jpg";
-
+import robin from "./members/robin.jpg";
+import charantej from "./members/charan-tej.jpg";
 function Home() {
   const associationMembers = [
     {
@@ -20,15 +21,16 @@ function Home() {
       posting: "President",
       image: null,
     },
-    {
-      name: "CHARAN TEJ",
-      posting: "Vice President – I",
-      image: null,
-    },
+    
     {
       name: "BHARATH KUMAR",
       posting: "Vice President – II",
       image: bharathKumar,
+    },
+    {
+      name: "CHARN TEJ",
+      posting: "Vice President – I",
+      image: charantej,
     },
     {
       name: "MADHUMITHA",
@@ -53,17 +55,28 @@ function Home() {
     {
       name: "ROBIN",
       posting: "Media",
-      image: null,
+      image: robin,
     },
     {
       name: "ELANGO",
       posting: "EDITOR",
       image: elango,
     },
+    
+    {
+      name: "SASI",
+      posting: "Director",
+      image: null,
+    },
     {
       name: "KAYALVIZHI",
       posting: "Office Bearer",
       image: kayalvizhi,
+    },
+    {
+      name: "KALAISELVI",
+      posting: "Office Bearer",
+      image: null,
     },
   ];
 
@@ -170,6 +183,34 @@ function Home() {
           <b>↗</b>
         </button>
       </main>
+      <section className="about-section">
+  <h2 className="about-title">ABOUT ECLECTIC’26</h2>
+
+  <p>
+    ECLECTIC’26 is an exciting technical symposium organized by the 
+    Department of Electronics and Communication Engineering, T.J.S. Engineering College.
+
+  </p>
+
+  <p>
+    The symposium is a platform for students to learn, compete, connect, create, 
+    and showcase their talents beyond the classroom. It brings together innovation, 
+    knowledge, creativity, teamwork, and entertainment in one energetic celebration.
+
+  </p>
+  <p>
+   From challenging technical activities to engaging non-technical experiences,
+    ECLECTIC’26 encourages students to think differently, discover their potential,
+     and create memorable moments with fellow participants. 
+  </p>
+
+  <div className="event-types">
+    <span>⚡ Technical Events</span>
+    <span>🎯 Non-Technical Events</span>
+    <span> 📅 22 October 2026</span>
+    <span>Come. Compete. Create. Celebrate ECLECTIC’26.</span>
+  </div>
+</section>
 
       {/* ASSOCIATION MEMBERS */}
       <section className="association-section">
