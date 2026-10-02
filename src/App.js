@@ -7,35 +7,41 @@ import QRPass from "./QRPass";
 import departmentLogo from "./department-logo.jpeg";
 
 // Members photos
+import ragul from "./members/ragul.jpg";
+import karthikeyan from "./members/karthikeyan.jpg";
+import madhumitha from "./members/madhumitha.jpg";
+import sasi from "./members/sasi.jpg";
 import bharathKumar from "./members/bharath-kumar.jpg";
 import reshmi from "./members/reshmi.jpg";
 import rubesh from "./members/rubesh.jpg";
 import elango from "./members/elango.jpg";
-import kayalvizhi from "./members/kayalvizhi.jpg";
 import robin from "./members/robin.jpg";
+import kayalvizhi from "./members/kayalvizhi.jpg";
 import charantej from "./members/charan-tej.jpg";
+import kalaiselvi from "./members/kalaiselvi.jpg";
+
 function Home() {
   const associationMembers = [
     {
       name: "RAGUL",
       posting: "President",
-      image: null,
+      image: ragul ,
     },
     
+    {
+      name: "CHARAN TEJ",
+      posting: "Vice President – I",
+      image: charantej,
+    },
     {
       name: "BHARATH KUMAR",
       posting: "Vice President – II",
       image: bharathKumar,
     },
     {
-      name: "CHARN TEJ",
-      posting: "Vice President – I",
-      image: charantej,
-    },
-    {
       name: "MADHUMITHA",
       posting: "Secretary",
-      image: null,
+      image: madhumitha,
     },
     {
       name: "RESHMI",
@@ -45,7 +51,7 @@ function Home() {
     {
       name: "KARTHIKEYAN",
       posting: "Treasurer",
-      image: null,
+      image: karthikeyan,
     },
     {
       name: "RUBESH",
@@ -66,17 +72,18 @@ function Home() {
     {
       name: "SASI",
       posting: "Director",
-      image: null,
+      image: sasi,
+    },
+    
+    {
+      name: "KALAISELVI",
+      posting: "Office Bearer",
+      image: kalaiselvi ,
     },
     {
       name: "KAYALVIZHI",
       posting: "Office Bearer",
-      image: kayalvizhi,
-    },
-    {
-      name: "KALAISELVI",
-      posting: "Office Bearer",
-      image: null,
+      image: kayalvizhi ,
     },
   ];
 
@@ -249,6 +256,8 @@ function Home() {
             </div>
           ))}
         </div>
+      
+
       </section>
 
       {/* FOOTER */}
@@ -335,4 +344,7 @@ function App() {
   return <Home />;
 }
 
-export default App;
+export default App; 
+
+
+  
