@@ -19,6 +19,7 @@ import robin from "./members/robin.jpg";
 import kayalvizhi from "./members/kayalvizhi.jpg";
 import charantej from "./members/charan-tej.jpg";
 import kalaiselvi from "./members/kalaiselvi.jpg";
+import ialiayaraja from "./members/ilaiyaraja.jpg";
 
 function Home() {
   const associationMembers = [
@@ -26,6 +27,11 @@ function Home() {
       name: "RAGUL",
       posting: "President",
       image: ragul ,
+    },
+    {
+      name: "KARTHIKEYAN",
+      posting: "Treasurer",
+      image: karthikeyan,
     },
     
     {
@@ -48,11 +54,7 @@ function Home() {
       posting: "Joint Secretary",
       image: reshmi,
     },
-    {
-      name: "KARTHIKEYAN",
-      posting: "Treasurer",
-      image: karthikeyan,
-    },
+    
     {
       name: "RUBESH",
       posting: "Joint Treasurer",
@@ -75,6 +77,11 @@ function Home() {
       image: sasi,
     },
     
+    {
+      name: "ILAIYARAJA",
+      posting: "Camara Man",
+      image: ialiayaraja,
+    },
     {
       name: "KALAISELVI",
       posting: "Office Bearer",
