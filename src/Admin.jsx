@@ -4,22 +4,17 @@ import {
   collection,
   getDocs,
   doc,
+  runTransaction,
   updateDoc,
-  deleteDoc,
+  
 } from "firebase/firestore";
 
 import { db } from "./firebase";
-
 import "./Admin.css";
 
 function Admin() {
   const [registrations, setRegistrations] = useState([]);
-
   const [filter, setFilter] = useState("All");
-
-  /* =========================
-     EVENT LISTS
-  ========================= */
 
   const technicalEvents = [
     "Idea Hackathon",
@@ -37,17 +32,24 @@ function Admin() {
     "Blind Cups",
   ];
 
-  const specialEvents = [
-    "Fit Tech",
-  ];
+  const specialEvents = ["Fit Tech"];
 
   const NON_TECHNICAL_CAPACITY = 20;
   const SPECIAL_EVENT_CAPACITY = 20;
 
-  /* =========================
-     APPROVE
-  ========================= */
+  // ----------------------------------------
+  // CREATE EVENT CAPACITY DOCUMENT ID
+  // Same logic as Register.jsx
+  // ----------------------------------------
+  const createEventId = (type, eventName) => {
+    return `${type}_${eventName
+      .replace(/\s+/g, "_")
+      .replace(/[^a-zA-Z0-9_]/g, "")}`;
+  };
 
+  // ----------------------------------------
+  // APPROVE REGISTRATION
+  // ----------------------------------------
   const handleApprove = async (registrationId) => {
     try {
       await updateDoc(
@@ -72,10 +74,10 @@ function Admin() {
     }
   };
 
-  /* =========================
-     DELETE
-  ========================= */
-
+  // ----------------------------------------
+  // DELETE REGISTRATION
+  // AND DECREASE EVENT CAPACITY COUNT
+  // ----------------------------------------
   const handleDelete = async (registrationId) => {
     const confirmDelete = window.confirm(
       "Are you sure you want to delete this registration?"
@@ -84,25 +86,210 @@ function Admin() {
     if (!confirmDelete) return;
 
     try {
-      await deleteDoc(
-        doc(db, "registrations", registrationId)
+      // Find the registration before deleting
+      const registration = registrations.find(
+        (item) => item.id === registrationId
       );
 
+      if (!registration) {
+        alert("Registration not found.");
+        return;
+      }
+
+      // Registration document reference
+      const registrationRef = doc(
+        db,
+        "registrations",
+        registrationId
+      );
+
+      // ----------------------------------------
+      // TECHNICAL EVENT REF
+      // ----------------------------------------
+      let technicalRef = null;
+
+      if (registration.technicalEvent) {
+        const technicalEventId = createEventId(
+          "technical",
+          registration.technicalEvent
+        );
+
+        technicalRef = doc(
+          db,
+          "eventCapacity",
+          technicalEventId
+        );
+      }
+
+      // ----------------------------------------
+      // NON-TECHNICAL EVENT REF
+      // ----------------------------------------
+      let nonTechnicalRef = null;
+
+      if (registration.nonTechnicalEvent) {
+        const nonTechnicalEventId = createEventId(
+          "nonTechnical",
+          registration.nonTechnicalEvent
+        );
+
+        nonTechnicalRef = doc(
+          db,
+          "eventCapacity",
+          nonTechnicalEventId
+        );
+      }
+
+      // ----------------------------------------
+      // SPECIAL EVENT REF
+      // ----------------------------------------
+      let specialEventRef = null;
+
+      if (registration.specialEvent) {
+        const specialEventId = createEventId(
+          "special",
+          registration.specialEvent
+        );
+
+        specialEventRef = doc(
+          db,
+          "eventCapacity",
+          specialEventId
+        );
+      }
+
+      // ----------------------------------------
+      // FIRESTORE TRANSACTION
+      // ----------------------------------------
+      await runTransaction(db, async (transaction) => {
+        // IMPORTANT:
+        // First READ all documents
+        // Then WRITE all documents
+
+        let technicalSnap = null;
+        let nonTechnicalSnap = null;
+        let specialSnap = null;
+
+        // ----------------------------------------
+        // READ TECHNICAL COUNT
+        // ----------------------------------------
+        if (technicalRef) {
+          technicalSnap = await transaction.get(
+            technicalRef
+          );
+        }
+
+        // ----------------------------------------
+        // READ NON-TECHNICAL COUNT
+        // ----------------------------------------
+        if (nonTechnicalRef) {
+          nonTechnicalSnap = await transaction.get(
+            nonTechnicalRef
+          );
+        }
+
+        // ----------------------------------------
+        // READ SPECIAL EVENT COUNT
+        // ----------------------------------------
+        if (specialEventRef) {
+          specialSnap = await transaction.get(
+            specialEventRef
+          );
+        }
+
+        // ----------------------------------------
+        // DECREASE TECHNICAL COUNT
+        // ----------------------------------------
+        if (
+          technicalRef &&
+          technicalSnap &&
+          technicalSnap.exists()
+        ) {
+          const currentCount =
+            technicalSnap.data().count || 0;
+
+          const newCount = Math.max(
+            0,
+            currentCount - 1
+          );
+
+          transaction.update(technicalRef, {
+            count: newCount,
+          });
+        }
+
+        // ----------------------------------------
+        // DECREASE NON-TECHNICAL COUNT
+        // ----------------------------------------
+        if (
+          nonTechnicalRef &&
+          nonTechnicalSnap &&
+          nonTechnicalSnap.exists()
+        ) {
+          const currentCount =
+            nonTechnicalSnap.data().count || 0;
+
+          const newCount = Math.max(
+            0,
+            currentCount - 1
+          );
+
+          transaction.update(nonTechnicalRef, {
+            count: newCount,
+          });
+        }
+
+        // ----------------------------------------
+        // DECREASE SPECIAL EVENT COUNT
+        // ----------------------------------------
+        if (
+          specialEventRef &&
+          specialSnap &&
+          specialSnap.exists()
+        ) {
+          const currentCount =
+            specialSnap.data().count || 0;
+
+          const newCount = Math.max(
+            0,
+            currentCount - 1
+          );
+
+          transaction.update(specialEventRef, {
+            count: newCount,
+          });
+        }
+
+        // ----------------------------------------
+        // DELETE REGISTRATION
+        // ----------------------------------------
+        transaction.delete(registrationRef);
+      });
+
+      // ----------------------------------------
+      // UPDATE ADMIN PAGE UI
+      // ----------------------------------------
       setRegistrations((prev) =>
         prev.filter(
           (registration) =>
             registration.id !== registrationId
         )
       );
+
+      alert(
+        "Registration deleted and event count updated successfully!"
+      );
     } catch (error) {
       console.error("Delete failed:", error);
+
+      alert(
+        "Delete failed. Please check Firebase and try again."
+      );
     }
   };
 
-  /* =========================
-     FETCH REGISTRATIONS
-  ========================= */
-
+  // ----------------------------------------
+  // FETCH REGISTRATIONS
+  // ----------------------------------------
   useEffect(() => {
     const fetchRegistrations = async () => {
       try {
@@ -127,10 +314,9 @@ function Admin() {
     fetchRegistrations();
   }, []);
 
-  /* =========================
-     FOOD COUNTS
-  ========================= */
-
+  // ----------------------------------------
+  // FOOD COUNTS
+  // ----------------------------------------
   const vegCount = registrations.filter(
     (registration) => {
       const food = String(
@@ -159,10 +345,9 @@ function Admin() {
     }
   ).length;
 
-  /* =========================
-     EVENT COUNT
-  ========================= */
-
+  // ----------------------------------------
+  // GET EVENT COUNT FOR ADMIN DISPLAY
+  // ----------------------------------------
   const getEventCount = (eventName) => {
     return registrations.filter(
       (registration) =>
@@ -172,55 +357,46 @@ function Admin() {
     ).length;
   };
 
-  /* =========================
-     FILTER
-  ========================= */
-
+  // ----------------------------------------
+  // FILTER REGISTRATIONS
+  // ----------------------------------------
   const filteredRegistrations =
     registrations.filter((registration) => {
-      if (filter === "All") return true;
+      if (filter === "All") {
+        return true;
+      }
 
       if (filter === "Approved") {
         return (
-          registration.approvalStatus ===
-          "Approved"
+          registration.approvalStatus === "Approved"
         );
       }
 
       if (filter === "Pending") {
         return (
-          registration.approvalStatus !==
-          "Approved"
+          registration.approvalStatus !== "Approved"
         );
       }
 
       return true;
     });
 
+  // ----------------------------------------
+  // UI
+  // ----------------------------------------
   return (
     <div className="admin-page">
-
-      {/* =========================
-          TITLE
-      ========================= */}
-
       <h1>ECLECTIC'26 ADMIN</h1>
 
       <p className="admin-total">
-        Total Registrations:{" "}
-        {registrations.length}
+        Total Registrations: {registrations.length}
       </p>
 
-      {/* =========================
-          FOOD COUNT
-      ========================= */}
-
+      {/* FOOD COUNT */}
       <div className="admin-stats-section">
-
         <h2>FOOD COUNT</h2>
 
         <div className="admin-stats-grid">
-
           <div className="admin-stat-card">
             <h3>🥬 VEG</h3>
             <p>{vegCount}</p>
@@ -230,25 +406,16 @@ function Admin() {
             <h3>🍗 NON-VEG</h3>
             <p>{nonVegCount}</p>
           </div>
-
         </div>
-
       </div>
 
-      {/* =========================
-          TECHNICAL EVENTS
-          NO LIMIT
-      ========================= */}
-
+      {/* TECHNICAL EVENTS */}
       <div className="admin-events-section">
-
         <h2>TECHNICAL EVENTS</h2>
 
         <div className="admin-event-grid">
-
           {technicalEvents.map((event) => {
-            const count =
-              getEventCount(event);
+            const count = getEventCount(event);
 
             return (
               <div
@@ -258,35 +425,24 @@ function Admin() {
                 <h3>{event}</h3>
 
                 <p>
-                  <strong>{count}</strong>{" "}
-                  Registered
+                  <strong>{count}</strong> Registered
                 </p>
               </div>
             );
           })}
-
         </div>
-
       </div>
 
-      {/* =========================
-          NON-TECHNICAL EVENTS
-          LIMIT 20
-      ========================= */}
-
+      {/* NON-TECHNICAL EVENTS */}
       <div className="admin-events-section">
-
         <h2>NON-TECHNICAL EVENTS</h2>
 
         <div className="admin-event-grid">
-
           {nonTechnicalEvents.map((event) => {
-            const count =
-              getEventCount(event);
+            const count = getEventCount(event);
 
             const isFull =
-              count >=
-              NON_TECHNICAL_CAPACITY;
+              count >= NON_TECHNICAL_CAPACITY;
 
             return (
               <div
@@ -295,7 +451,6 @@ function Admin() {
                   isFull ? "event-full" : ""
                 }`}
               >
-
                 <h3>{event}</h3>
 
                 <p>
@@ -308,33 +463,22 @@ function Admin() {
                     🔒 FULL
                   </span>
                 )}
-
               </div>
             );
           })}
-
         </div>
-
       </div>
 
-      {/* =========================
-          SPECIAL EVENTS
-          FIT TECH - LIMIT 20
-      ========================= */}
-
+      {/* SPECIAL EVENT */}
       <div className="admin-events-section">
-
         <h2>SPECIAL EVENT</h2>
 
         <div className="admin-event-grid">
-
           {specialEvents.map((event) => {
-            const count =
-              getEventCount(event);
+            const count = getEventCount(event);
 
             const isFull =
-              count >=
-              SPECIAL_EVENT_CAPACITY;
+              count >= SPECIAL_EVENT_CAPACITY;
 
             return (
               <div
@@ -343,7 +487,6 @@ function Admin() {
                   isFull ? "event-full" : ""
                 }`}
               >
-
                 <h3>{event}</h3>
 
                 <p>
@@ -356,21 +499,14 @@ function Admin() {
                     🔒 FULL
                   </span>
                 )}
-
               </div>
             );
           })}
-
         </div>
-
       </div>
 
-      {/* =========================
-          FILTERS
-      ========================= */}
-
+      {/* FILTER BUTTONS */}
       <div className="admin-filters">
-
         <button
           onClick={() => setFilter("All")}
         >
@@ -388,23 +524,16 @@ function Admin() {
         >
           Approved
         </button>
-
       </div>
 
-      {/* =========================
-          REGISTRATIONS
-      ========================= */}
-
+      {/* REGISTRATION CARDS */}
       {filteredRegistrations.map(
         (registration) => (
           <div
             key={registration.id}
             className="admin-card"
           >
-
-            <h2>
-              {registration.fullName}
-            </h2>
+            <h2>{registration.fullName}</h2>
 
             <p>
               <strong>Email:</strong>{" "}
@@ -452,7 +581,6 @@ function Admin() {
 
             <p>
               <strong>Payment Status:</strong>{" "}
-
               <span
                 className={
                   registration.paymentStatus ===
@@ -474,7 +602,6 @@ function Admin() {
 
             <p>
               <strong>Approval Status:</strong>{" "}
-
               <span
                 className={
                   registration.approvalStatus ===
@@ -488,14 +615,11 @@ function Admin() {
               </span>
             </p>
 
-            {/* APPROVE */}
-
+            {/* APPROVE BUTTON */}
             <button
               className="approve-btn"
               onClick={() =>
-                handleApprove(
-                  registration.id
-                )
+                handleApprove(registration.id)
               }
               disabled={
                 registration.approvalStatus ===
@@ -508,23 +632,18 @@ function Admin() {
                 : "Approve Registration"}
             </button>
 
-            {/* DELETE */}
-
+            {/* DELETE BUTTON */}
             <button
               className="delete-btn"
               onClick={() =>
-                handleDelete(
-                  registration.id
-                )
+                handleDelete(registration.id)
               }
             >
               Delete Registration
             </button>
-
           </div>
         )
       )}
-
     </div>
   );
 }
