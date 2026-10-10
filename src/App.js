@@ -286,7 +286,7 @@ function Home() {
             <h4>CONTACT</h4>
 
             <a href="mailto:eclectic26@gmail.com">
-              ✉ eclectic26@gmail.com
+              ✉ eclectic.tjs@gmail.com
             </a>
 
             <a href="tel:+919176269657">
@@ -307,17 +307,31 @@ function Home() {
           </div>
         </div>
 
-        {/* Footer Divider */}
-        <div className="footer-line"></div>
+              {/* Footer Divider */}
+      <div className="footer-line"></div>
 
-        {/* Copyright */}
-        <div className="footer-bottom">
-          <p>© 2026 ECLECTIC'26 • ECE DEPARTMENT</p>
+      {/* Developer Credit */}
+      <div className="footer-developer">
+        <p className="footer-college">
+          ECLECTIC'26 — T.J.S. Engineering College
+        </p>
 
-          <span>ALL RIGHTS RESERVED</span>
-        </div>
-      </footer>
-    </div>
+        <p className="footer-credit">
+          Designed &amp; Developed by
+        </p>
+
+        <h4>RESHMI MOORTHY</h4>
+
+        <p className="footer-role">
+          ECE Engineering Student | Aspiring Full Stack Developer
+        </p>
+
+        <p className="footer-copyright">
+          © 2026 ECLECTIC'26. All rights reserved.
+        </p>
+      </div>
+    </footer>
+  </div>
   );
 }
 
@@ -351,7 +365,4 @@ function App() {
   return <Home />;
 }
 
-export default App; 
-
-
-  
+export default App;
