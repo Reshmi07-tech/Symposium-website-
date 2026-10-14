@@ -11,7 +11,7 @@ import { db } from "./firebase";
 import departmentLogo from "./department-logo.jpeg";
 
 const TECHNICAL_EVENTS = [
-  "Idea Hackathon",
+  "Idea Hackathon/Paper Presentation",
   "Comp Finder",
   "Circuit Debugging",
   "Code Crack",

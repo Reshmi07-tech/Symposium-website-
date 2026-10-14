@@ -1,8 +1,9 @@
+
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCRbNjuZOHd6583lcy7U5iEnv5hpghGAfw",
+  apiKey: "YOUR_API_KEY",
   authDomain: "eclectic26-9a541.firebaseapp.com",
   projectId: "eclectic26-9a541",
   storageBucket: "eclectic26-9a541.firebasestorage.app",
@@ -15,5 +16,4 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 export { db };
-
 export default app;

@@ -20,6 +20,7 @@ import kayalvizhi from "./members/kayalvizhi.jpg";
 import charantej from "./members/charan-tej.jpg";
 import kalaiselvi from "./members/kalaiselvi.jpg";
 import ialiayaraja from "./members/ilaiyaraja.jpg";
+import jayanth from "./members/jayanth.jpg";
 
 function Home() {
   const associationMembers = [
@@ -32,6 +33,11 @@ function Home() {
       name: "KARTHIKEYAN",
       posting: "Treasurer",
       image: karthikeyan,
+    },
+    {
+      name: "JAYANTH",
+      posting: "Media Head",
+      image: jayanth,
     },
     
     {
