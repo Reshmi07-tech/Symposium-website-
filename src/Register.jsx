@@ -28,8 +28,8 @@ const NON_TECHNICAL_EVENTS = [
 
 const SPECIAL_EVENT = "Fit Tech";
 
-const NON_TECHNICAL_CAPACITY = 20;
-const SPECIAL_EVENT_CAPACITY = 20;
+const NON_TECHNICAL_CAPACITY = 50;
+const SPECIAL_EVENT_CAPACITY = 50;
 
 function Register() {
   const [fullName, setFullName] = useState("");
@@ -62,7 +62,7 @@ function Register() {
 
         const nonTechnicalData = {};
 
-        // Non-technical events - MAX 20
+        // Non-technical events - MAX 50
         for (const eventName of NON_TECHNICAL_EVENTS) {
           const eventId = `nonTechnical_${eventName
             .replace(/\s+/g, "_")
@@ -76,7 +76,7 @@ function Register() {
             : 0;
         }
 
-        // Special Event - Fit Tech - MAX 20
+        // Special Event - Fit Tech - MAX 50
         const specialEventId = `special_${SPECIAL_EVENT
           .replace(/\s+/g, "_")
           .replace(/[^a-zA-Z0-9_]/g, "")}`;
@@ -246,7 +246,7 @@ function Register() {
 
         /* =========================
            NON-TECHNICAL EVENT
-           LIMIT 20
+           LIMIT 50
         ========================= */
 
         let nonTechnicalCurrentCount = 0;
@@ -273,7 +273,7 @@ function Register() {
 
         /* =========================
            SPECIAL EVENT
-           FIT TECH - LIMIT 20
+           FIT TECH - LIMIT 50
         ========================= */
 
         let specialCurrentCount = 0;
