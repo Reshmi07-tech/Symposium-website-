@@ -34,8 +34,8 @@ function Admin() {
 
   const specialEvents = ["Fit Tech"];
 
-  const NON_TECHNICAL_CAPACITY = 20;
-  const SPECIAL_EVENT_CAPACITY = 20;
+  const NON_TECHNICAL_CAPACITY = 50;
+  const SPECIAL_EVENT_CAPACITY = 50;
 
   // ----------------------------------------
   // CREATE EVENT CAPACITY DOCUMENT ID
