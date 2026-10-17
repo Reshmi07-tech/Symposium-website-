@@ -17,12 +17,12 @@ function Admin() {
   const [filter, setFilter] = useState("All");
 
   const technicalEvents = [
-    "Idea Hackathon",
-    "Comp Finder",
-    "Circuit Debugging",
-    "Code Crack",
-    "Mind Spark",
-  ];
+  "Idea Hackathon/Paper Presentation",
+  "Comp Finder",
+  "Circuit Debugging",
+  "Code Crack",
+  "Mind Spark",
+];
 
   const nonTechnicalEvents = [
     "E-Sports",
@@ -345,17 +345,30 @@ function Admin() {
     }
   ).length;
 
-  // ----------------------------------------
   // GET EVENT COUNT FOR ADMIN DISPLAY
-  // ----------------------------------------
-  const getEventCount = (eventName) => {
-    return registrations.filter(
-      (registration) =>
-        registration.technicalEvent === eventName ||
-        registration.nonTechnicalEvent === eventName ||
-        registration.specialEvent === eventName
-    ).length;
-  };
+
+const getEventCount = (eventName) => {
+  return registrations.filter((registration) => {
+    const technicalEvent = String(
+      registration.technicalEvent || ""
+    )
+      .trim()
+      .toLowerCase();
+
+    if (eventName === "Idea Hackathon / Paper Presentation") {
+      return (
+        technicalEvent === "idea hackathon" ||
+        technicalEvent === "idea hackathon / paper presentation"
+      );
+    }
+
+    return (
+      registration.technicalEvent === eventName ||
+      registration.nonTechnicalEvent === eventName ||
+      registration.specialEvent === eventName
+    );
+  }).length;
+};
 
   // ----------------------------------------
   // FILTER REGISTRATIONS
