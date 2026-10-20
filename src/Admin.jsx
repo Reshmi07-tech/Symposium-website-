@@ -5,7 +5,6 @@ import {
   getDocs,
   doc,
   runTransaction,
-  updateDoc,
   
 } from "firebase/firestore";
 
@@ -50,29 +49,84 @@ function Admin() {
   // ----------------------------------------
   // APPROVE REGISTRATION
   // ----------------------------------------
-  const handleApprove = async (registrationId) => {
-    try {
-      await updateDoc(
-        doc(db, "registrations", registrationId),
-        {
-          approvalStatus: "Approved",
-        }
-      );
+  
+const handleApprove = async (registrationId) => {
+  const registrationRef = doc(
+    db,
+    "registrations",
+    registrationId
+  );
 
-      setRegistrations((prev) =>
-        prev.map((registration) =>
-          registration.id === registrationId
-            ? {
-                ...registration,
-                approvalStatus: "Approved",
-              }
-            : registration
-        )
+  const controlRef = doc(
+    db,
+    "settings",
+    "registrationControl"
+  );
+
+  try {
+    await runTransaction(db, async (transaction) => {
+      const registrationSnap =
+        await transaction.get(registrationRef);
+
+      const controlSnap =
+        await transaction.get(controlRef);
+
+      if (!registrationSnap.exists()) {
+        throw new Error("Registration not found.");
+      }
+
+      const registrationData = registrationSnap.data();
+
+      if (registrationData.approvalStatus === "Approved") {
+        return;
+      }
+
+      // Bootstrap the counter from registrations already loaded.
+      const existingApprovedCount = registrations.filter(
+        (item) => item.approvalStatus === "Approved"
+      ).length;
+
+      const approvedCount = controlSnap.exists()
+        ? controlSnap.data().approvedCount
+        : existingApprovedCount;
+
+      if (approvedCount >= 100) {
+        throw new Error(
+          "REGISTRATION SLOTS ARE FILLED. Maximum 100 approvals allowed."
+        );
+      }
+
+      transaction.update(registrationRef, {
+        approvalStatus: "Approved",
+      });
+
+      transaction.set(
+        controlRef,
+        {
+          approvedCount: approvedCount + 1,
+          registrationLimit: 100,
+        },
+        { merge: true }
       );
-    } catch (error) {
-      console.error("Approval failed:", error);
-    }
-  };
+    });
+
+    setRegistrations((prev) =>
+      prev.map((registration) =>
+        registration.id === registrationId
+          ? {
+              ...registration,
+              approvalStatus: "Approved",
+            }
+          : registration
+      )
+    );
+
+    alert("Registration approved successfully!");
+  } catch (error) {
+    console.error("Approval failed:", error);
+    alert(error.message || "Approval failed. Please try again.");
+  }
+};
 
   // ----------------------------------------
   // DELETE REGISTRATION

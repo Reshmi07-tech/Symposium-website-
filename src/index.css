@@ -7004,3 +7004,81 @@ body {
     font-size: 10px;
   }
 }
+.registration-closed {
+  text-align: center;
+  padding: 22px;
+  margin: 20px auto;
+  max-width: 600px;
+  border: 1px solid #ff4d9d;
+  border-radius: 16px;
+  background: rgba(30, 10, 45, 0.9);
+  box-shadow: 0 0 18px rgba(255, 77, 157, 0.2);
+}
+
+.registration-closed h2 {
+  color: #ff75b8;
+  font-size: 22px;
+  font-weight: 800;
+}
+
+.registration-closed p {
+  color: white;
+}
+
+.future-nav button:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+/* ECLECTIC'26 - Registration Closed Theme */
+
+.registration-closed {
+  width: min(90%, 600px);
+  margin: 30px auto;
+  padding: 28px 24px;
+  box-sizing: border-box;
+  text-align: center;
+
+  background: rgba(25, 12, 45, 0.88);
+  border: 1px solid rgba(190, 120, 255, 0.75);
+  border-radius: 20px;
+
+  box-shadow:
+    0 0 12px rgba(157, 78, 221, 0.25),
+    0 0 28px rgba(157, 78, 221, 0.12);
+
+  backdrop-filter: blur(12px);
+}
+
+.registration-closed h2 {
+  margin: 0 0 12px;
+  color: #e4b5ff;
+  font-size: clamp(20px, 4vw, 30px);
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-shadow: 0 0 12px rgba(190, 120, 255, 0.35);
+}
+
+.registration-closed p {
+  margin: 0;
+  color: #eee6ff;
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+.registration-closed button {
+  margin-top: 20px;
+  padding: 12px 24px;
+  border: 1px solid #c58aff;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #6b21a8, #3b1768);
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+  transition: box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.registration-closed button:hover {
+  border-color: #f0d4ff;
+  box-shadow: 0 0 16px rgba(197, 138, 255, 0.4);
+}

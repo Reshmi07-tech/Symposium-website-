@@ -5,6 +5,14 @@ import EventPass from "./EventPass";
 import QRPass from "./QRPass";
 
 import departmentLogo from "./department-logo.jpeg";
+import { useEffect, useState } from "react";
+import {
+  collection,
+  onSnapshot,
+  query,
+  where,
+} from "firebase/firestore";
+import { db } from "./firebase";
 
 // Members photos
 import ragul from "./members/ragul.jpg";
@@ -22,7 +30,7 @@ import kalaiselvi from "./members/kalaiselvi.jpg";
 import ialiayaraja from "./members/ilaiyaraja.jpg";
 import jayanth from "./members/jayanth.jpg";
 
-function Home() {
+function Home({ registrationClosed }) {
   const associationMembers = [
     {
       name: "RAGUL",
@@ -129,12 +137,14 @@ function Home() {
           </span>
 
           <button
-            onClick={() => {
-              window.location.href = "/register";
-            }}
-          >
-            REGISTER
-          </button>
+  disabled={registrationClosed}
+  onClick={() => {
+    if (registrationClosed) return;
+    window.location.href = "/register";
+  }}
+>
+  {registrationClosed ? "SLOTS FILLED" : "REGISTER"}
+</button>
         </div>
       </nav>
 
@@ -193,15 +203,22 @@ function Home() {
         </div>
 
         {/* Register Button */}
-        <button
-          className="future-register"
-          onClick={() => {
-            window.location.href = "/register";
-          }}
-        >
-          <span>REGISTER NOW</span>
-          <b>↗</b>
-        </button>
+{registrationClosed ? (
+  <div className="registration-closed">
+    <h2>REGISTRATION SLOTS ARE FILLED</h2>
+    <p> Online Registration is now closed.</p>
+  </div>
+) : (
+  <button
+    className="future-register"
+    onClick={() => {
+      window.location.href = "/register";
+    }}
+  >
+    <span>REGISTER NOW</span>
+    <b>↗</b>
+  </button>
+)}
       </main>
       <section className="about-section">
   <h2 className="about-title">ABOUT ECLECTIC’26</h2>
@@ -345,10 +362,63 @@ function Home() {
    APP ROUTING
 ========================================= */
 
+
 function App() {
+  const [approvedCount, setApprovedCount] = useState(0);
+  const [loadingApprovals, setLoadingApprovals] = useState(true);
+  const [approvalError, setApprovalError] = useState(false);
+
   const path = window.location.pathname;
 
+  useEffect(() => {
+    const approvedQuery = query(
+      collection(db, "registrations"),
+      where("approvalStatus", "==", "Approved")
+    );
+
+    const unsubscribe = onSnapshot(
+      approvedQuery,
+      (snapshot) => {
+        setApprovedCount(snapshot.size);
+        setLoadingApprovals(false);
+        setApprovalError(false);
+      },
+      (error) => {
+        console.error("Approved registrations error:", error);
+        setApprovalError(true);
+        setLoadingApprovals(false);
+      }
+    );
+
+    return () => unsubscribe();
+  }, []);
+
+  const registrationClosed = approvedCount >= 100;
+
+  // Registration page protection
   if (path === "/register") {
+    if (loadingApprovals) {
+      return <p>Checking registration availability...</p>;
+    }
+
+    if (approvalError) {
+      return (
+        <div className="registration-closed">
+          <h2>UNABLE TO CHECK REGISTRATION</h2>
+          <p>Please try again later.</p>
+          <button onClick={() => {
+            window.location.href = "/";
+          }}>
+            GO TO HOME
+          </button>
+        </div>
+      );
+    }
+
+    if (registrationClosed) {
+      return <Home registrationClosed={true} />;
+    }
+
     return <Register />;
   }
 
@@ -368,7 +438,13 @@ function App() {
     return <Admin />;
   }
 
-  return <Home />;
+  return (
+    <Home
+      registrationClosed={
+        !loadingApprovals && !approvalError && registrationClosed
+      }
+    />
+  );
 }
 
 export default App;
